@@ -1,0 +1,23 @@
+{
+  "name": "notenapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tailwindcss -i ./src/input.css -o ./dist/style.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sebastian-sonne/notenapp.git"
+  },
+  "author": "Sebastian Sonne",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sebastian-sonne/notenapp/issues"
+  },
+  "homepage": "https://github.com/sebastian-sonne/notenapp#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.4.1"
+  }
+}
