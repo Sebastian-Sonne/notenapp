@@ -127,26 +127,37 @@
         class="hidden justify-center items-center absolute top-0 left-0 w-full h-full backdrop-blur-sm z-20">
         <!--* Schüler Anzeigen-->
         <div class="sm:max-w-4xl w-full mx-auto p-6 bg-gray-100 rounded-lg shadow-lg">
-            <h2 class="text-2xl font-semibold text-gray-800 mb-6">Schüler Hinzufügen</h2>
+            <div class="flex justify-between">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-6">Schüler Hinzufügen</h2>
+
+                <button type="button" onclick="hideNewStudentBox()"
+                    class="flex items-center justify-center mb-6  px-4 py-2 rounded-lg text-white hover:bg-red-600 transition-all">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="4" y1="4" x2="20" y2="20" stroke="#1f2937" stroke-width="3" />
+                        <line x1="20" y1="4" x2="4" y2="20" stroke="#1f2937" stroke-width="3" />
+                    </svg>
+                </button>
+            </div>
+            
 
             <form id="add-student-form" class="flex flex-col space-y-4">
                 <div class="flex flex-wrap -mx-2">
                     <div class="w-full md:w-1/2 px-2">
                         <label for="name" class="text-gray-800">Name:</label>
                         <input type="text" id="name" name="name" placeholder="Max Musterman" required
-                            class="w-full px-4 py-2 rounded-lg border-gray-400 focus:border-green-600 focus:outline-none">
+                            class="w-full px-4 py-2 rounded-lg border border-transparent focus:border-green-600 focus:outline-none">
                     </div>
                     <div class="w-full md:w-1/2 px-2">
                         <label for="id" class="text-gray-800">Schüler ID:</label>
                         <input type="text" id="id" name="id" placeholder="123456" required
-                            class="w-full px-4 py-2 rounded-lg border-gray-400 focus:border-green-600 focus:outline-none">
+                            class="w-full px-4 py-2 rounded-lg border border-transparent focus:border-green-600 focus:outline-none">
                     </div>
                 </div>
 
                 <div class="flex flex-col">
                     <label for="email" class="text-gray-800">Email:</label>
                     <input type="email" id="email" name="email" placeholder="max@example.com" required
-                        class="w-full px-4 py-2 rounded-lg border-gray-400 focus:border-green-600 focus:outline-none">
+                        class="w-full px-4 py-2 rounded-lg border border-transparent focus:border-green-600 focus:outline-none">
                 </div>
 
                 <!-- Written Grades -->
@@ -154,17 +165,30 @@
                     <div class="w-full md:w-3/4 px-2">
                         <div id="writtenGradesContainer" class="flex flex-col">
                             <label for="writtenGrades" class="text-gray-800">Schriftliche Noten:</label>
-                            <input type="text"
-                                class="writtenGrade w-full px-4 py-2 rounded-lg border-gray-400 focus:border-green-600 focus:outline-none"
+                            <input type="number"
+                                class="writtenGrade w-full px-4 py-2 rounded-lg border border-transparent focus:border-green-600 focus:outline-none"
                                 name="writtenGrade[]" placeholder="2" required>
                         </div>
                     </div>
                     <div class="w-full md:w-1/4 px-2 flex items-end">
                         <button type="button" onclick="addWrittenGrade()"
-                            class="mt-2 md:mt-0 px-4 py-2 rounded-lg bg-notenapp-blue text-white hover:bg-notenapp-blue-hover transition-all">
-                            Note Hinzufügen
+                            class="flex items-center justify-center mt-2 md:mt-0 w-full px-4 py-2 rounded-lg bg-notenapp-blue text-white hover:bg-notenapp-blue-hover transition-all">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <line x1="12" y1="4" x2="12" y2="20" stroke="white" stroke-width="2" />
+                                <line x1="4" y1="12" x2="20" y2="12" stroke="white" stroke-width="2" />
+                            </svg>
+                        </button>
+                        <button type="button" onclick="removeWrittenGrade()"
+                            class="flex items-center justify-center mt-2 md:mt-0 w-full px-4 py-2 ml-4 rounded-lg bg-red-700 text-white hover:bg-red-600 transition-all">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <line x1="6" y1="6" x2="18" y2="18" stroke="white" stroke-width="2" />
+                                <line x1="18" y1="6" x2="6" y2="18" stroke="white" stroke-width="2" />
+                            </svg>
                         </button>
                     </div>
+
                 </div>
 
                 <!-- Oral Grades -->
@@ -172,15 +196,27 @@
                     <div class="w-full md:w-3/4 px-2">
                         <div id="oralGradesContainer" class="flex flex-col">
                             <label for="oralGrades" class="text-gray-800">Mündliche Noten:</label>
-                            <input type="text"
-                                class="oralGrade w-full px-4 py-2 rounded-lg border-gray-400 focus:border-green-600 focus:outline-none"
+                            <input type="number"
+                                class="oralGrade w-full px-4 py-2 rounded-lg border border-transparent focus:border-green-600 focus:outline-none"
                                 name="oralGrade[]" placeholder="1">
                         </div>
                     </div>
                     <div class="w-full md:w-1/4 px-2 flex items-end">
                         <button type="button" onclick="addOralGrade()"
-                            class="mt-2 md:mt-0 px-4 py-2 rounded-lg bg-notenapp-blue text-white hover:bg-notenapp-blue-hover transition-all">
-                            Note Hinzufügen
+                            class="flex items-center justify-center mt-2 md:mt-0 w-full px-4 py-2 rounded-lg bg-notenapp-blue text-white hover:bg-notenapp-blue-hover transition-all">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <line x1="12" y1="4" x2="12" y2="20" stroke="white" stroke-width="2" />
+                                <line x1="4" y1="12" x2="20" y2="12" stroke="white" stroke-width="2" />
+                            </svg>
+                        </button>
+                        <button type="button" onclick="removeOralGrade()"
+                            class="flex items-center justify-center mt-2 md:mt-0 w-full px-4 py-2 ml-4 rounded-lg bg-red-700 text-white hover:bg-red-600 transition-all">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <line x1="6" y1="6" x2="18" y2="18" stroke="white" stroke-width="2" />
+                                <line x1="18" y1="6" x2="6" y2="18" stroke="white" stroke-width="2" />
+                            </svg>
                         </button>
                     </div>
                 </div>

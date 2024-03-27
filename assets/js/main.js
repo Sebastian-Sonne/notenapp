@@ -1,3 +1,6 @@
+/**
+ * executed when html content load is complete
+ */
 document.addEventListener("DOMContentLoaded", function () {
     const newStudentButton = document.getElementById('add-student-button');
     const newStudentBox = document.getElementById('create-new-student-box');
@@ -5,22 +8,27 @@ document.addEventListener("DOMContentLoaded", function () {
     newStudentButton.addEventListener("click", toggleNewStudentBox);
     document.addEventListener('keydown', handleKeyDown);
 
+    /**
+     * function to toggle the new student box
+     */
     function toggleNewStudentBox() {
         newStudentBox.classList.toggle('hidden');
         newStudentBox.classList.toggle('flex');
     }
 
+    /**
+     * function to close (if applicable) any in screen windows
+     * @param {*} event 
+     */
     function handleKeyDown(event) {
         if (event.key === "Escape") {
             hideNewStudentBox();
         }
     }
 
-    function hideNewStudentBox() {
-        newStudentBox.classList.remove('flex');
-        newStudentBox.classList.add('hidden');
-    }
-
+    /**
+     * fuction to handle the form submit to add a new student
+     */
     document.getElementById('add-student-form').addEventListener('submit', function(event) {
         event.preventDefault();
         
@@ -49,32 +57,83 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('email').value = '';
         clearGradeInputs('writtenGradesContainer');
         clearGradeInputs('oralGradesContainer');
+
+        //re add default inputs
+        addWrittenGrade(1);
+        addOralGrade(2);
+
+        //hide form field
+        hideNewStudentBox();
     });
 });
 
+/**
+ * function to hide the add new student box
+ */
+function hideNewStudentBox() {
+    const newStudentBox = document.getElementById('create-new-student-box');
+    newStudentBox.classList.remove('flex');
+    newStudentBox.classList.add('hidden');
+}
 
-function addWrittenGrade() {
+/**
+ * function to add a written grade input field to the add new student form
+ * @param {int} placeholder 
+ */
+function addWrittenGrade(placeholder) {
     var container = document.getElementById('writtenGradesContainer');
     var input = document.createElement('input');
-    input.type = 'text';
-    input.className = 'writtenGrade';
+    input.type = 'number';
+    if (placeholder) {
+        input.placeholder = placeholder;
+    }
+    input.classList = 'writtenGrade w-full mt-2 px-4 py-2 rounded-lg border border-transparent focus:border-green-600 focus:outline-none';
     input.name = 'writtenGrade[]';
-    input.required = true;
     container.appendChild(input);
-    container.appendChild(document.createElement('br'));
 }
 
-function addOralGrade() {
+/**
+ * function to remove the last written grade input field of the add new student array
+ */
+function removeWrittenGrade() {
+    var container = document.getElementById('writtenGradesContainer');
+    var lastChild = container.lastElementChild;
+    if (lastChild && lastChild.classList.contains('writtenGrade')) {
+        container.removeChild(lastChild);
+    }
+}
+
+/**
+ * function to add a oral grade input field to the add new student form
+ * @param {int} placeholder 
+ */
+function addOralGrade(placeholder) {
     var container = document.getElementById('oralGradesContainer');
     var input = document.createElement('input');
-    input.type = 'text';
-    input.className = 'oralGrade';
+    input.type = 'number';
+    if (placeholder) {
+        input.placeholder = placeholder;
+    }
+    input.classList =  'oralGrade w-full mt-2 px-4 py-2 rounded-lg border border-transparent focus:border-green-600 focus:outline-none';
     input.name = 'oralGrade[]';
-    input.required = true;
     container.appendChild(input);
-    container.appendChild(document.createElement('br'));
 }
 
+/**
+ * function to remove the last written grade input field of the add new student array
+ */
+function removeOralGrade() {
+    var container = document.getElementById('oralGradesContainer');
+    var lastChild = container.lastElementChild;
+    if (lastChild && lastChild.classList.contains('oralGrade')) {
+        container.removeChild(lastChild);
+    }
+}
+
+/**
+ * function to add a new student to the student table
+ * @param {} student 
+ */
 function addStudentToList(student) {
     const table = document.getElementById('students-table-body');
     var tableItem = document.createElement('tr');
@@ -88,13 +147,22 @@ function addStudentToList(student) {
         }
     }
 
+    //! verify input in form
+
     table.appendChild(tableItem);
 }
 
-function calculateGPA() {
-    
+/**
+ * function to calcutlate the average grade
+ */
+function calculateAverage() {
+
 }
 
+/**
+ * function to clear all grade input fields in a container (for add new student form)
+ * @param {container} containerId 
+ */
 function clearGradeInputs(containerId) {
     var container = document.getElementById(containerId);
     var inputs = container.querySelectorAll('.writtenGrade, .oralGrade');
