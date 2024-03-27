@@ -2,7 +2,11 @@
 module.exports = {
   content: ["./*.{html,js}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'notenapp-blue' : '#007be6',
+      },
+    },
   },
   plugins: [],
 }
