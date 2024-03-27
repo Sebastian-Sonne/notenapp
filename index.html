@@ -12,39 +12,100 @@
 
 <body>
 
-    <section class="flex justify-center h-16 bg-white text-white text-4xl">
+    <section class="flex justify-center h-16 bg-white text-white text-4xl mb-4 mt-2">
         <div class="flex justify-between max-w-6xl w-full bg-white">
             <div class="flex">
                 <a class="aspect-square w-12 mx-4" href="/">
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                    xmlns:serif="http://www.serif.com/" width="100%" height="100%" viewBox="0 0 8334 8334"
-                    xml:space="preserve"
-                    style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
-                    <path
-                        d="M6330.22,802.076c1856.97,1194.1 2395.14,3671.17 1201.04,5528.14c-1194.1,1856.97 -3671.17,2395.14 -5528.14,1201.04c-1856.97,-1194.1 -2395.14,-3671.17 -1201.04,-5528.14c1194.1,-1856.97 3671.17,-2395.14 5528.14,-1201.04Zm-554.473,5364.68c215.832,-0.026 391.013,-175.223 391.013,-391.013l0,-2205.43c0,-304.085 -378.611,-990.19 -1121.04,-1103.72c-927.848,-141.885 -1712.42,266.678 -1712.42,266.678l0,-566.692l-775.704,0c-215.815,0.009 -391.014,175.213 -391.014,391.014l0,3218.15c0,215.806 175.207,391.013 391.014,391.013l1075.72,0l-0,-1733.41c-0,-294.368 238.989,-533.357 533.357,-533.357c294.367,0 533.357,238.989 533.357,533.357l-0,1733.41l1075.72,0Z"
-                        style="fill:#008ee6;"></path>
-                </svg> 
-            </a>
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        xmlns:serif="http://www.serif.com/" width="100%" height="100%" viewBox="0 0 8334 8334"
+                        xml:space="preserve"
+                        style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+                        <path
+                            d="M6330.22,802.076c1856.97,1194.1 2395.14,3671.17 1201.04,5528.14c-1194.1,1856.97 -3671.17,2395.14 -5528.14,1201.04c-1856.97,-1194.1 -2395.14,-3671.17 -1201.04,-5528.14c1194.1,-1856.97 3671.17,-2395.14 5528.14,-1201.04Zm-554.473,5364.68c215.832,-0.026 391.013,-175.223 391.013,-391.013l0,-2205.43c0,-304.085 -378.611,-990.19 -1121.04,-1103.72c-927.848,-141.885 -1712.42,266.678 -1712.42,266.678l0,-566.692l-775.704,0c-215.815,0.009 -391.014,175.213 -391.014,391.014l0,3218.15c0,215.806 175.207,391.013 391.014,391.013l1075.72,0l-0,-1733.41c-0,-294.368 238.989,-533.357 533.357,-533.357c294.367,0 533.357,238.989 533.357,533.357l-0,1733.41l1075.72,0Z"
+                            style="fill:#008ee6;"></path>
+                    </svg>
+                </a>
 
-            <h1 class="text-gray-700 text-2xl font-semibold h-full pt-4">Notenapp Admin Panel</h1>
+                <h1 class="text-gray-700 text-2xl font-semibold mt-4">Lehrer Admin Panel</h1>
             </div>
-            
-            <div class="flex justify-center mx-4 aspect-square w-12">
-                <div class="w-full aspect-square my-auto rounded-full bg-gray-300 cursor-pointer">
 
-                </div>
+            <div class="flex justify-center aspect-square w-12 mx-4">
+                <div class="w-full aspect-square my-auto rounded-full bg-gray-300 cursor-pointer"></div>
             </div>
         </div>
     </section>
 
     <section class="flex justify-center">
-        <div class="flex max-w-6xl w-full bg-gray-100 rounded-xl" style="height: 70vh;">
+        <div class="flex flex-col max-w-6xl w-full px-4">
+            <div class="flex justify-between align-middle h-10 w-full">
+                <h2 class="h-10 pt-2 text-gray-700 text-2xl font-semibold">Übersicht Schüler</h2>
 
+                <a class="px-4 py-2 rounded-lg bg-green-600 hover:bg-green-500 cursor-pointer transition-all">
+                    <span class="text-white font-semibold">Schüler Hinzufügen</span>
+                </a>
+            </div>
+
+
+
+            <div class="w-full mt-4 p-4 bg-gray-50 rounded-lg">
+
+                <div class="w-full rounded-lg overflow-x-auto">
+                    <table class="table-auto border-collapse w-full">
+                        <thead>
+                            <tr class="bg-gray-200 text-gray-700">
+                                <th class="px-4 py-2 w-28">Schüler ID</th>
+                                <th class="px-4 py-2">Schüler Name</th>
+                                <th class="px-4 py-2">Schüler Email</th>
+                                <th class="px-4 py-2">Notendurchschnitt</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-600">
+                            <tr class="hover:bg-gray-100">
+                                <td class="border px-4 py-2">163849</td>
+                                <td class="border px-4 py-2">John Doe</td>
+                                <td class="border px-4 py-2">john@example.com</td>
+                                <td class="border px-4 py-2">2,3</td>
+                            </tr>
+                            <tr class="hover:bg-gray-100">
+                                <td class="border px-4 py-2">176540</td>
+                                <td class="border px-4 py-2">Jane Smite</td>
+                                <td class="border px-4 py-2">jane@example.com</td>
+                                <td class="border px-4 py-2">1,2</td>
+                            </tr>
+                            <tr class="hover:bg-gray-100">
+                                <td class="border px-4 py-2">187632</td>
+                                <td class="border px-4 py-2">Alice Johnson</td>
+                                <td class="border px-4 py-2">alice@example.com</td>
+                                <td class="border px-4 py-2">1,8</td>
+                            </tr>
+                            <tr class="hover:bg-gray-100">
+                                <td class="border px-4 py-2">195432</td>
+                                <td class="border px-4 py-2">Robert Smith</td>
+                                <td class="border px-4 py-2">robert@example.com</td>
+                                <td class="border px-4 py-2">2,0</td>
+                            </tr>
+                            <tr class="hover:bg-gray-100">
+                                <td class="border px-4 py-2">203948</td>
+                                <td class="border px-4 py-2">Emily Davis</td>
+                                <td class="border px-4 py-2">emily@example.com</td>
+                                <td class="border px-4 py-2">1,5</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div class="hidden flex-col align-middle w-full h-32">
+                    <h2 class="font-bold text-3xl text-center text-gray-800">Keine Schüler Gefunden</h2>
+                    <p class="text-center text-lg text-gray-700">Füge einen neuen Schüler hinzu!</p>
+                </div>
+            </div>
         </div>
     </section>
 
     <section class="flex justify-center align-middle w-full h-6 my-2">
-        <p class="w-48 text-gray-500 font-normal">&copy 2024 <a href="https://github.com/sebastian-sonne" class="text-slate-600 hover:text-notenapp-blue">Sebastian Sonne</a></p>
+        <p class="w-48 text-gray-500 font-normal">&copy 2024 <a href="https://github.com/sebastian-sonne"
+                class="text-slate-600 hover:text-notenapp-blue">Sebastian Sonne</a></p>
     </section>
 </body>
 
