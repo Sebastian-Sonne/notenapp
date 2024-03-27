@@ -4,7 +4,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'notenapp-blue' : '#007be6',
+        'notenapp-blue' : '#008ee6',
+        'notenapp-blue-hover' : '#006eb2',
       },
     },
   },
