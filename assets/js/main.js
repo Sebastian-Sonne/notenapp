@@ -3,18 +3,9 @@
  */
 document.addEventListener("DOMContentLoaded", function () {
     const newStudentButton = document.getElementById('add-student-button');
-    const newStudentBox = document.getElementById('create-new-student-box');
 
     newStudentButton.addEventListener("click", toggleNewStudentBox);
     document.addEventListener('keydown', handleKeyDown);
-
-    /**
-     * function to toggle the new student box
-     */
-    function toggleNewStudentBox() {
-        newStudentBox.classList.toggle('hidden');
-        newStudentBox.classList.toggle('flex');
-    }
 
     /**
      * function to close (if applicable) any in screen windows
@@ -23,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function handleKeyDown(event) {
         if (event.key === "Escape") {
             hideNewStudentBox();
+            hideStudentInfoBox();
         }
     }
 
@@ -86,8 +78,9 @@ function updateTable() {
     var storedData = JSON.parse(localStorage.getItem("students"));
 
     if (storedData) {
+        clearTable();
+
         for (var key in storedData) {
-            //! clear old table
             setupTable(storedData[key]);
         }
         toggleNoStudentsFound(true);
@@ -96,11 +89,17 @@ function updateTable() {
     }
 }
 
+function clearTable() {
+    const table = document.getElementById('students-table-body');
+    table.innerHTML = '';
+}
 
 function setupTable(student) {
     const table = document.getElementById('students-table-body');
     var tableItem = document.createElement('tr');
     tableItem.classList.add('hover:bg-gray-100');
+    tableItem.classList.add('cursor-pointer');
+    tableItem.addEventListener('click', openStudentProperties);
 
     var keys = ['id', 'name', 'email', 'average'];
 
@@ -121,27 +120,9 @@ function setupTable(student) {
     table.appendChild(tableItem);
 }
 
-/**
- * function to add a new student to the student table
- * @param {} student 
- */
-function addStudentToList(student) {
-    console.log(student);
-    const table = document.getElementById('students-table-body');
-    var tableItem = document.createElement('tr');
-
-    for (var key in student) {
-        if (student.hasOwnProperty(key)) {
-            const element = document.createElement('td');
-            element.classList = 'border px-4 py-2';
-            element.textContent = student[key];
-            tableItem.appendChild(element);
-        }
-    }
-
-    //! verify input in form
-
-    table.appendChild(tableItem);
+function openStudentProperties() {
+    console.log('student properties opend');
+    toggleStudentInfoBox();
 }
 
 /**
@@ -200,12 +181,33 @@ function clearNewStudentForm() {
 }
 
 /**
+ *  function to toggle the new student box
+*/
+function toggleNewStudentBox() {
+    const newStudentBox = document.getElementById('create-new-student-box');
+    newStudentBox.classList.toggle('hidden');
+    newStudentBox.classList.toggle('flex');
+}
+
+/**
  * function to hide the add new student box
  */
 function hideNewStudentBox() {
     const newStudentBox = document.getElementById('create-new-student-box');
     newStudentBox.classList.remove('flex');
     newStudentBox.classList.add('hidden');
+}
+
+function toggleStudentInfoBox() {
+    const studentInfoBox = document.getElementById('student-info-box');
+    studentInfoBox.classList.toggle('hidden');
+    studentInfoBox.classList.toggle('flex');
+}
+
+function hideStudentInfoBox() {
+    const studentInfoBox = document.getElementById('student-info-box');
+    studentInfoBox.classList.remove('flex');
+    studentInfoBox.classList.add('hidden');
 }
 
 /**
