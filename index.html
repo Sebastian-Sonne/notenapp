@@ -60,6 +60,7 @@
                             </tr>
                         </thead>
                         <tbody id="students-table-body" class="text-gray-600">
+                            <!--
                             <tr class="hover:bg-gray-100">
                                 <td class="border px-4 py-2">163849</td>
                                 <td class="border px-4 py-2">John Doe</td>
@@ -110,12 +111,13 @@
                                         class="m-2 py-1 px-2 text-center text-white font-semibold bg-notenapp-blue hover:bg-notenapp-blue-hover rounded-lg cursor-pointer transition-all">Info</a>
                                 </td>
                             </tr>
+                        -->
                         </tbody>
                     </table>
                 </div>
 
 
-                <div class="hidden flex-col align-middle w-full h-32">
+                <div id="no-students-found" class="hidden flex-col align-middle w-full">
                     <h2 class="font-bold text-3xl text-center text-gray-800">Keine Schüler Gefunden</h2>
                     <p class="text-center text-lg text-gray-700">Füge einen neuen Schüler hinzu!</p>
                 </div>
@@ -124,7 +126,7 @@
     </section>
 
     <section id="create-new-student-box"
-        class="hidden justify-center items-center absolute top-0 left-0 w-full h-full backdrop-blur-sm z-20">
+        class="hidden justify-center items-center absolute top-0 left-0 w-full h-full backdrop-brightness-50 backdrop-blur-sm z-20">
         <!--* Schüler Anzeigen-->
         <div class="sm:max-w-4xl w-full mx-auto p-6 bg-gray-100 rounded-lg shadow-lg">
             <div class="flex justify-between">
@@ -138,7 +140,6 @@
                     </svg>
                 </button>
             </div>
-            
 
             <form id="add-student-form" class="flex flex-col space-y-4">
                 <div class="flex flex-wrap -mx-2">
@@ -229,12 +230,7 @@
                 </button>
             </form>
         </div>
-
     </section>
-
-    <ul id="studentList">
-        <!-- Student entries will be added here -->
-    </ul>
 
     <section class="hidden justify-center items-center absolute top-0 left-0 w-full h-full backdrop-blur-sm z-20">
         <!--* Schüler Anzeigen-->

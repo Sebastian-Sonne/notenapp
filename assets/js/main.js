@@ -26,46 +26,178 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    updateTable();
+
     /**
      * fuction to handle the form submit to add a new student
      */
-    document.getElementById('add-student-form').addEventListener('submit', function(event) {
+    document.getElementById('add-student-form').addEventListener('submit', function (event) {
         event.preventDefault();
-        
-        // Get form values
-        var id = document.getElementById('id').value;
-        var name = document.getElementById('name').value;
-        var email = document.getElementById('email').value;
-        var writtenGrades = Array.from(document.getElementsByClassName('writtenGrade')).map(input => input.value);
-        var oralGrades = Array.from(document.getElementsByClassName('oralGrade')).map(input => input.value);
-    
+
         // Create student object
-        var student = {
-            id: id,
-            name: name,
-            email: email,
-            writtenGrades: writtenGrades,
-            oralGrades: oralGrades
+        var studentData = {
+            id: document.getElementById('id').value,
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            writtenGrades: Array.from(document.getElementsByClassName('writtenGrade')).map(input => input.value),
+            oralGrades: Array.from(document.getElementsByClassName('oralGrade')).map(input => input.value)
         };
-    
-        // Add student to list
-        addStudentToList(student);
-    
-        // Clear form fields
-        document.getElementById('id').value = '';
-        document.getElementById('name').value = '';
-        document.getElementById('email').value = '';
-        clearGradeInputs('writtenGradesContainer');
-        clearGradeInputs('oralGradesContainer');
 
-        //re add default inputs
-        addWrittenGrade(1);
-        addOralGrade(2);
+        studentData.average = calculateAverage(studentData);
 
-        //hide form field
+        saveStudentData(studentData);
+
+        clearNewStudentForm();
         hideNewStudentBox();
     });
 });
+
+function saveStudentData(studentData) {
+    if (typeof (Storage) !== undefined) {
+        //retrive existing data or create empty array
+        var data = JSON.parse(localStorage.getItem("students")) || [];
+
+        //add new student data to data
+        data.push(studentData);
+
+        //save the updated data
+        localStorage.setItem("students", JSON.stringify(data));
+
+        updateTable();
+    } else {
+        console.log('Dein Browser unterstützt kein local storage :(');
+        //! handle error
+    }
+}
+
+function toggleNoStudentsFound(studentsFound) {
+    const noStudentsFound = document.getElementById('no-students-found');
+    if (studentsFound) {
+        noStudentsFound.classList.remove('flex');
+        noStudentsFound.classList.add('hidden');
+    } else {
+        noStudentsFound.classList.remove('hidden');
+        noStudentsFound.classList.add('flex');
+    }
+
+}
+
+function updateTable() {
+    var storedData = JSON.parse(localStorage.getItem("students"));
+
+    if (storedData) {
+        for (var key in storedData) {
+            //! clear old table
+            setupTable(storedData[key]);
+        }
+        toggleNoStudentsFound(true);
+    } else {
+        toggleNoStudentsFound(false);
+    }
+}
+
+
+function setupTable(student) {
+    const table = document.getElementById('students-table-body');
+    var tableItem = document.createElement('tr');
+    tableItem.classList.add('hover:bg-gray-100');
+
+    var keys = ['id', 'name', 'email', 'average'];
+
+    keys.forEach(key => {
+        if (student.hasOwnProperty(key)) {
+            const element = document.createElement('td');
+            element.classList = 'border px-4 py-2';
+            element.textContent = student[key];
+            tableItem.appendChild(element);
+        }
+    });
+
+    const infoButton = document.createElement('td');
+    infoButton.classList.add('border-y');
+    infoButton.innerHTML = "<a id=\"learn-more-about-student\" class=\"m-2 py-1 px-2 text-center text-white font-semibold bg-notenapp-blue hover:bg-notenapp-blue-hover rounded-lg cursor-pointer transition-all\">Info</a>";
+    tableItem.appendChild(infoButton);
+
+    table.appendChild(tableItem);
+}
+
+/**
+ * function to add a new student to the student table
+ * @param {} student 
+ */
+function addStudentToList(student) {
+    console.log(student);
+    const table = document.getElementById('students-table-body');
+    var tableItem = document.createElement('tr');
+
+    for (var key in student) {
+        if (student.hasOwnProperty(key)) {
+            const element = document.createElement('td');
+            element.classList = 'border px-4 py-2';
+            element.textContent = student[key];
+            tableItem.appendChild(element);
+        }
+    }
+
+    //! verify input in form
+
+    table.appendChild(tableItem);
+}
+
+/**
+ * function to calculate the average grade of student
+ * @param {} student student
+ * @returns average as double
+ */
+function calculateAverage(student) {
+    var oralGrades = student.oralGrades;
+    const oralGradesLength = oralGrades.length;
+
+    var writtenGrades = student.writtenGrades;
+    const writtenGradesLength = writtenGrades.length;
+
+    var sumOral = oralGrades.reduce((acc, grade) => acc + parseFloat(grade), 0);
+    var sumWritten = writtenGrades.reduce((acc, grade) => acc + parseFloat(grade), 0);
+
+    var average = 0;
+    if (oralGradesLength + writtenGradesLength > 0) {
+        average = (2 * sumWritten + sumOral) / (oralGradesLength + 2 * writtenGradesLength);
+    }
+
+    //round to two decimal points
+    average = Number(average.toFixed(2));
+
+    return average;
+}
+
+/*
+ *  
+ */
+
+/**
+ * function to clear all grade input fields in a container (for add new student form)
+ * @param {container} containerId 
+ */
+function clearGradeInputs(containerId) {
+    var container = document.getElementById(containerId);
+    var inputs = container.querySelectorAll('.writtenGrade, .oralGrade');
+    inputs.forEach(input => {
+        input.parentNode.removeChild(input);
+    });
+}
+
+/**
+ * function to clear new student form
+ */
+function clearNewStudentForm() {
+    document.getElementById('add-student-form').reset();
+    clearGradeInputs('writtenGradesContainer');
+    clearGradeInputs('oralGradesContainer');
+
+    //re add default inputs to grades
+    addWrittenGrade(1);
+    addOralGrade(2);
+}
 
 /**
  * function to hide the add new student box
@@ -114,7 +246,7 @@ function addOralGrade(placeholder) {
     if (placeholder) {
         input.placeholder = placeholder;
     }
-    input.classList =  'oralGrade w-full mt-2 px-4 py-2 rounded-lg border border-transparent focus:border-green-600 focus:outline-none';
+    input.classList = 'oralGrade w-full mt-2 px-4 py-2 rounded-lg border border-transparent focus:border-green-600 focus:outline-none';
     input.name = 'oralGrade[]';
     container.appendChild(input);
 }
@@ -128,45 +260,4 @@ function removeOralGrade() {
     if (lastChild && lastChild.classList.contains('oralGrade')) {
         container.removeChild(lastChild);
     }
-}
-
-/**
- * function to add a new student to the student table
- * @param {} student 
- */
-function addStudentToList(student) {
-    const table = document.getElementById('students-table-body');
-    var tableItem = document.createElement('tr');
-
-    for (var key in student) {
-        if (student.hasOwnProperty(key)) {
-            const element = document.createElement('td');
-            element.classList = 'border px-4 py-2';
-            element.textContent = student[key];
-            tableItem.appendChild(element);
-        }
-    }
-
-    //! verify input in form
-
-    table.appendChild(tableItem);
-}
-
-/**
- * function to calcutlate the average grade
- */
-function calculateAverage() {
-
-}
-
-/**
- * function to clear all grade input fields in a container (for add new student form)
- * @param {container} containerId 
- */
-function clearGradeInputs(containerId) {
-    var container = document.getElementById(containerId);
-    var inputs = container.querySelectorAll('.writtenGrade, .oralGrade');
-    inputs.forEach(input => {
-        input.parentNode.removeChild(input);
-    });
 }
