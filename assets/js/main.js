@@ -3,14 +3,10 @@
  */
 document.addEventListener("DOMContentLoaded", function () {
     const newStudentButton = document.getElementById('add-student-button');
-
     newStudentButton.addEventListener("click", () => toggleNewStudentBox(true));
-    document.addEventListener('keydown', handleKeyDown);
 
-    /**
-     * function to close (if applicable) any in screen windows
-     * @param {*} event 
-     */
+    //handle keydown events to close overlays
+    document.addEventListener('keydown', handleKeyDown);
     function handleKeyDown(event) {
         if (event.key === "Escape") {
             toggleNewStudentBox(false);
@@ -109,7 +105,7 @@ function addStudentToTable(student) {
     tableItem.classList.add('cursor-pointer');
 
     tableItem.addEventListener('click', function () {
-        openStudentProperties(student);
+        openStudentInfoTable(student);
     });
 
     var keys = ['id', 'name', 'email', 'average'];
@@ -148,7 +144,7 @@ function clearTable() {
  * function to open the student properties for a student
  * @param {*} student 
  */
-function openStudentProperties(student) {
+function openStudentInfoTable(student) {
     //assign student values to info box   
     document.getElementById('info-name').value = student.name;
     document.getElementById('info-id').value = student.id;
@@ -162,6 +158,10 @@ function openStudentProperties(student) {
     for (let i = 0; i < length; i++) {
         addGradeToStudentInfoTable(table, student.oralGrades[i], student.writtenGrades[i]);
     }
+
+    //set button actions
+    const deleteButton = document.getElementById('delete-student-button');
+    deleteButton.addEventListener("click", () => deleteStudent(student));
 
     //show info box
     toggleStudentInfoBox(true);
@@ -214,6 +214,33 @@ function toggleStudentInfoBox(visible) {
     studentInfoBox.classList.toggle('flex', visible);
 }
 
+
+/*
+ * students actions
+ */
+
+function deleteStudent(student) {
+    if (typeof (Storage) !== undefined) {
+        //! var confirmation = confirm("Möchten Sie diesen Schüler wirklich löschen? Sie können dies nicht Rückgängig machen.");
+
+        if (true) {
+            //fetrieve existing data
+            var data = JSON.parse(localStorage.getItem("students")) || [];
+
+            //filter out the student to be deleted
+            var newData = data.filter(function (existingStudent) {
+                // Compare the student objects
+                return JSON.stringify(existingStudent) !== JSON.stringify(student);
+            });
+
+            //save change
+            localStorage.setItem("students", JSON.stringify(newData));
+
+            updateTable();
+            toggleStudentInfoBox(false);
+        }
+    }
+}
 
 /*
  * math functions
@@ -289,22 +316,6 @@ function toggleNewStudentBox(visible) {
     newStudentBox.classList.toggle('flex', visible);
 }
 
-/*
- *  
- */
-
-/**
- * function to clear all grade input fields in a container (for add new student form)
- * @param {container} containerId 
- */
-function clearGradeInputs(containerId) {
-    var container = document.getElementById(containerId);
-    var inputs = container.querySelectorAll('.writtenGrade, .oralGrade');
-    inputs.forEach(input => {
-        input.parentNode.removeChild(input);
-    });
-}
-
 /**
  * function to add a written grade input field to the add new student form
  * @param {int} placeholder 
@@ -357,4 +368,16 @@ function removeOralGrade() {
     if (lastChild && lastChild.classList.contains('oralGrade')) {
         container.removeChild(lastChild);
     }
+}
+
+/**
+ * function to clear all grade input fields in a container (for add new student form)
+ * @param {container} containerId 
+ */
+function clearGradeInputs(containerId) {
+    var container = document.getElementById(containerId);
+    var inputs = container.querySelectorAll('.writtenGrade, .oralGrade');
+    inputs.forEach(input => {
+        input.parentNode.removeChild(input);
+    });
 }

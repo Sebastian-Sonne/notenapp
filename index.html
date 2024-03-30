@@ -191,7 +191,7 @@
 
     </section>
 
-    <!--* Show Student-->
+    <!--* Show Student Info-->
     <section id="student-info-box"
         class="hidden justify-center absolute top-0 left-0 w-full h-full backdrop-brightness-50 backdrop-blur-sm z-20">
         <div class="sm:max-w-4xl w-full mx-auto my-auto p-4">
@@ -243,21 +243,18 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
-
-                    <br><br>
-
-                    <div class="flex w-full mt-20 ">
-                        <button class="px-6 py-2 mr-3 w-full rounded-lg bg-green-600 text-white font-semibold hover:bg-green-500 transition-all">
-                            Schüler Bearbeiten
-                        </button>
-
-                        <button class="px-6 py-2 ml-3 w-full md:w-1/3 rounded-lg border-2 border-red-700 text-gray-800 font-semibold hover:border-red-600 hover:bg-red-600 hover:text-white transition-all">
-                            Schüler Löschen
-                        </button>
-                    </div>
-                    
+                    </div>                    
                 </form>
+
+                <div class="flex w-full mt-6">
+                    <button id="edit-student-button" class="px-6 py-2 mr-3 w-full rounded-lg bg-green-600 text-white font-semibold hover:bg-green-500 transition-all">
+                        Schüler Bearbeiten
+                    </button>
+
+                    <button id="delete-student-button" class="px-6 py-2 ml-3 w-full md:w-1/3 rounded-lg border-2 border-red-700 text-gray-800 font-semibold hover:border-red-600 hover:bg-red-600 hover:text-white transition-all">
+                        Schüler Löschen
+                    </button>
+                </div>
             </div>
 
         </div>
