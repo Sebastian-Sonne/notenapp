@@ -197,10 +197,10 @@
         <div class="sm:max-w-4xl w-full mx-auto my-auto p-4">
             <div class="p-6 bg-gray-100 rounded-lg shadow-lg">
                 <div class="flex justify-between">
-                    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Schüler Info</h2>
+                    <h2 class="text-2xl font-semibold text-gray-800">Schüler Info</h2>
 
                     <button type="button" onclick="hideStudentInfoBox()"
-                        class="flex items-center justify-center mb-6  px-4 py-2 rounded-lg text-white hover:bg-red-600 transition-all">
+                        class="flex items-center justify-center  px-4 py-2 rounded-lg text-white hover:bg-red-600 transition-all">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <line x1="4" y1="4" x2="20" y2="20" stroke="#1f2937" stroke-width="3" />
                             <line x1="20" y1="4" x2="4" y2="20" stroke="#1f2937" stroke-width="3" />
@@ -210,36 +210,36 @@
 
                 <form id="student-data-form" class="flex flex-col space-y-4">
                     <div class="flex flex-wrap -mx-2">
-                        <div class="w-full md:w-1/2 px-2">
+                        <div class="w-full md:w-1/2 px-2 mt-4">
                             <label for="name" class="text-gray-800">Name:</label>
-                            <input type="text" id="name" name="name" value="Student Name" disabled required
-                                class="w-full px-4 py-2 rounded-lg border border-transparent focus:border-green-600 focus:outline-none">
+                            <input type="text" id="info-name" name="name" value="Student Name" disabled required
+                                class="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-200 focus:outline-none">
                         </div>
-                        <div class="w-full md:w-1/2 px-2">
+                        <div class="w-full md:w-1/2 px-2 mt-4">
                             <label for="id" class="text-gray-800">Schüler ID:</label>
-                            <input type="text" id="id" name="id" value="123456" disabled required
-                                class="w-full px-4 py-2 rounded-lg border border-transparent focus:border-green-600 focus:outline-none">
+                            <input type="text" id="info-id" name="id" value="123456" disabled required
+                                class="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-200 focus:outline-none">
                         </div>
                     </div>
 
                     <div class="flex flex-col">
                         <label for="email" class="text-gray-800">Email:</label>
-                        <input type="email" id="email" name="email" value="email@example.com" disabled required
-                            class="w-full px-4 py-2 rounded-lg border border-transparent focus:border-green-600 focus:outline-none">
+                        <input type="email" id="info-email" name="email" value="email@example.com" disabled required
+                            class="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-200 focus:outline-none">
                     </div>
 
                     <div class="w-full rounded-t-lg overflow-x-auto">
                         <table class="table-auto border-collapse w-full">
                             <thead>
                                 <tr class="bg-gray-200 text-gray-700">
-                                    <th class="px-4 py-2">Mündliche Noten</th>
+                                    <th class="px-4 py-2">Schriftliche Noten</th>
                                     <th class="px-4 py-2">Mündliche Noten</th>
                                 </tr>
                             </thead>
                             <tbody id="grade-table-body" class="text-gray-600 bg-white">
                                 <tr class="hover:bg-gray-50 cursor-pointer">
-                                    <td class="border px-4 py-2">123456</td>
-                                    <td class="border px-4 py-2">Max Musterman</td>
+                                    <td class="border px-4 py-2">1.3</td>
+                                    <td class="border px-4 py-2">1.6</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -252,7 +252,7 @@
                             Schüler Bearbeiten
                         </button>
 
-                        <button class="px-6 py-2 ml-3 w-1/3 rounded-lg border-2 border-red-700 text-gray-800 font-semibold hover:border-red-600 hover:bg-red-600 hover:text-white transition-all">
+                        <button class="px-6 py-2 ml-3 w-full md:w-1/3 rounded-lg border-2 border-red-700 text-gray-800 font-semibold hover:border-red-600 hover:bg-red-600 hover:text-white transition-all">
                             Schüler Löschen
                         </button>
                     </div>

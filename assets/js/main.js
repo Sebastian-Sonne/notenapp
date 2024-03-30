@@ -64,7 +64,8 @@ function saveStudentData(studentData) {
 
 function toggleNoStudentsFound(studentsFound) {
     const noStudentsFound = document.getElementById('no-students-found');
-    if (studentsFound) {
+
+    if (!studentsFound) {
         noStudentsFound.classList.remove('flex');
         noStudentsFound.classList.add('hidden');
     } else {
@@ -74,32 +75,47 @@ function toggleNoStudentsFound(studentsFound) {
 
 }
 
+/**
+ * function to update the students table
+ */
 function updateTable() {
     var storedData = JSON.parse(localStorage.getItem("students"));
 
     if (storedData) {
         clearTable();
 
+        //sort student based on their average
+        storedData.sort(compareStudents);
+
+        //add students to table
         for (var key in storedData) {
-            setupTable(storedData[key]);
+            addStudentToTable(storedData[key]);
         }
-        toggleNoStudentsFound(true);
-    } else {
         toggleNoStudentsFound(false);
+    } else {
+        toggleNoStudentsFound(true);
     }
 }
 
+/**
+ * function to clear the students table
+ */
 function clearTable() {
     const table = document.getElementById('students-table-body');
     table.innerHTML = '';
 }
 
-function setupTable(student) {
+function addStudentToTable(student) {
     const table = document.getElementById('students-table-body');
     var tableItem = document.createElement('tr');
+
+    //set class properties
     tableItem.classList.add('hover:bg-gray-100');
     tableItem.classList.add('cursor-pointer');
-    tableItem.addEventListener('click', openStudentProperties);
+
+    tableItem.addEventListener('click', function() {
+        openStudentProperties(student);
+    });    
 
     var keys = ['id', 'name', 'email', 'average'];
 
@@ -120,10 +136,45 @@ function setupTable(student) {
     table.appendChild(tableItem);
 }
 
-function openStudentProperties() {
-    console.log('student properties opend');
+function openStudentProperties(student) {
+    //assign student values to info box
+    const nameBox = document.getElementById('info-name');
+    nameBox.value = student.name;
+
+    const idBox = document.getElementById('info-id');
+    idBox.value = student.id;
+
+    const emailBox = document.getElementById('info-email');
+    emailBox.value = student.email;
+
+    //show info box
     toggleStudentInfoBox();
 }
+
+/*
+ * 
+ */
+
+/**
+ * function to compare the average of two students
+ * @param {*} studentA reference to student a
+ * @param {*} studentB reference to student b
+ * @returns negative if avg1 > avg2, 0 if avg1 = avg2, positive if avg1 < avg2
+ */
+function compareStudents(student1, student2) {
+    // If one of the students has an average grade of 0, move it to the end
+    if (student1.average === 0 && student2.average !== 0) {
+        return 1;
+    } else if (student1.average !== 0 && student2.average === 0) {
+        return -1; 
+    }
+
+    return student1.average - student2.average;
+}
+
+// Sort the array of student objects based on their average grade
+studentData.sort(compareStudents);
+
 
 /**
  * function to calculate the average grade of student
