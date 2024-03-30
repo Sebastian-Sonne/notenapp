@@ -4,7 +4,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const newStudentButton = document.getElementById('add-student-button');
 
-    newStudentButton.addEventListener("click", toggleNewStudentBox);
+    newStudentButton.addEventListener("click", () => toggleNewStudentBox(true));
     document.addEventListener('keydown', handleKeyDown);
 
     /**
@@ -13,11 +13,12 @@ document.addEventListener("DOMContentLoaded", function () {
      */
     function handleKeyDown(event) {
         if (event.key === "Escape") {
-            hideNewStudentBox();
-            hideStudentInfoBox();
+            toggleNewStudentBox(false);
+            toggleStudentInfoBox(false);
         }
     }
 
+    //update table after initial load
     updateTable();
 
     /**
@@ -39,8 +40,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         saveStudentData(studentData);
 
-        clearNewStudentForm();
-        hideNewStudentBox();
+        clearNewStudentBox();
+        toggleNewStudentBox(false);
     });
 });
 
@@ -62,17 +63,19 @@ function saveStudentData(studentData) {
     }
 }
 
-function toggleNoStudentsFound(studentsFound) {
+
+/*
+ * main students table 
+ */
+
+/**
+ * function to toggle the not students found info block
+ * @param {*} visible true if set visible
+ */
+function toggleNoStudentsFound(visible) {
     const noStudentsFound = document.getElementById('no-students-found');
-
-    if (!studentsFound) {
-        noStudentsFound.classList.remove('flex');
-        noStudentsFound.classList.add('hidden');
-    } else {
-        noStudentsFound.classList.remove('hidden');
-        noStudentsFound.classList.add('flex');
-    }
-
+    noStudentsFound.classList.toggle('hidden', !visible);
+    noStudentsFound.classList.toggle('flex', visible);
 }
 
 /**
@@ -97,14 +100,6 @@ function updateTable() {
     }
 }
 
-/**
- * function to clear the students table
- */
-function clearTable() {
-    const table = document.getElementById('students-table-body');
-    table.innerHTML = '';
-}
-
 function addStudentToTable(student) {
     const table = document.getElementById('students-table-body');
     var tableItem = document.createElement('tr');
@@ -113,9 +108,9 @@ function addStudentToTable(student) {
     tableItem.classList.add('hover:bg-gray-100');
     tableItem.classList.add('cursor-pointer');
 
-    tableItem.addEventListener('click', function() {
+    tableItem.addEventListener('click', function () {
         openStudentProperties(student);
-    });    
+    });
 
     var keys = ['id', 'name', 'email', 'average'];
 
@@ -136,23 +131,92 @@ function addStudentToTable(student) {
     table.appendChild(tableItem);
 }
 
-function openStudentProperties(student) {
-    //assign student values to info box
-    const nameBox = document.getElementById('info-name');
-    nameBox.value = student.name;
-
-    const idBox = document.getElementById('info-id');
-    idBox.value = student.id;
-
-    const emailBox = document.getElementById('info-email');
-    emailBox.value = student.email;
-
-    //show info box
-    toggleStudentInfoBox();
+/**
+ * function to clear the students table
+ */
+function clearTable() {
+    const table = document.getElementById('students-table-body');
+    table.innerHTML = '';
 }
 
+
 /*
- * 
+ * student info table 
+ */
+
+/**
+ * function to open the student properties for a student
+ * @param {*} student 
+ */
+function openStudentProperties(student) {
+    //assign student values to info box   
+    document.getElementById('info-name').value = student.name;
+    document.getElementById('info-id').value = student.id;
+    document.getElementById('info-email').value = student.email;
+
+    //print student grades in table
+    clearStudentInfoTable();
+    const table = document.getElementById('grade-table-body');
+    const length = Math.max(student.oralGrades.length, student.writtenGrades.length);
+
+    for (let i = 0; i < length; i++) {
+        addGradeToStudentInfoTable(table, student.oralGrades[i], student.writtenGrades[i]);
+    }
+
+    //show info box
+    toggleStudentInfoBox(true);
+}
+
+/**
+ * function to add a pair of oral and written grades to the student info talbe
+ * @param {*} table student info grades table
+ * @param {*} oralGrade 
+ * @param {*} writtenGrade 
+ */
+function addGradeToStudentInfoTable(table, oralGrade, writtenGrade) {
+    const tableItem = document.createElement('tr');
+
+    //helper function to set up grade table element
+    const createGradeElement = (grade) => {
+        const gradeElement = document.createElement('td');
+        gradeElement.classList = 'border px-4 py-2';
+        gradeElement.textContent = (grade !== undefined) ? grade : '-';
+        return gradeElement;
+    };
+
+    //create grade elements using helper function
+    const writtenGradeElement = createGradeElement(writtenGrade);
+    const oralGradeElement = createGradeElement(oralGrade);
+
+    //add grades to table row
+    tableItem.appendChild(writtenGradeElement);
+    tableItem.appendChild(oralGradeElement);
+
+    //add table row to table
+    table.appendChild(tableItem);
+}
+
+/**
+ * function to clear the student info grade table
+ */
+function clearStudentInfoTable() {
+    const table = document.getElementById('grade-table-body');
+    table.innerHTML = '';
+}
+
+/**
+ * function to toggle te student info box
+ * @param {*} visible true if set visible
+ */
+function toggleStudentInfoBox(visible) {
+    const studentInfoBox = document.getElementById('student-info-box');
+    studentInfoBox.classList.toggle('hidden', !visible);
+    studentInfoBox.classList.toggle('flex', visible);
+}
+
+
+/*
+ * math functions
  */
 
 /**
@@ -166,15 +230,11 @@ function compareStudents(student1, student2) {
     if (student1.average === 0 && student2.average !== 0) {
         return 1;
     } else if (student1.average !== 0 && student2.average === 0) {
-        return -1; 
+        return -1;
     }
 
     return student1.average - student2.average;
 }
-
-// Sort the array of student objects based on their average grade
-studentData.sort(compareStudents);
-
 
 /**
  * function to calculate the average grade of student
@@ -203,6 +263,33 @@ function calculateAverage(student) {
 }
 
 /*
+ * new student form 
+ */
+
+/**
+ * function to clear new student form
+ */
+function clearNewStudentBox() {
+    document.getElementById('add-student-form').reset();
+    clearGradeInputs('writtenGradesContainer');
+    clearGradeInputs('oralGradesContainer');
+
+    //re add default inputs to grades
+    addWrittenGrade(1);
+    addOralGrade(2);
+}
+
+/**
+ * function to toggle the new student box
+ * @param {*} visible true if set visible
+ */
+function toggleNewStudentBox(visible) {
+    const newStudentBox = document.getElementById('create-new-student-box');
+    newStudentBox.classList.toggle('hidden', !visible);
+    newStudentBox.classList.toggle('flex', visible);
+}
+
+/*
  *  
  */
 
@@ -216,49 +303,6 @@ function clearGradeInputs(containerId) {
     inputs.forEach(input => {
         input.parentNode.removeChild(input);
     });
-}
-
-/**
- * function to clear new student form
- */
-function clearNewStudentForm() {
-    document.getElementById('add-student-form').reset();
-    clearGradeInputs('writtenGradesContainer');
-    clearGradeInputs('oralGradesContainer');
-
-    //re add default inputs to grades
-    addWrittenGrade(1);
-    addOralGrade(2);
-}
-
-/**
- *  function to toggle the new student box
-*/
-function toggleNewStudentBox() {
-    const newStudentBox = document.getElementById('create-new-student-box');
-    newStudentBox.classList.toggle('hidden');
-    newStudentBox.classList.toggle('flex');
-}
-
-/**
- * function to hide the add new student box
- */
-function hideNewStudentBox() {
-    const newStudentBox = document.getElementById('create-new-student-box');
-    newStudentBox.classList.remove('flex');
-    newStudentBox.classList.add('hidden');
-}
-
-function toggleStudentInfoBox() {
-    const studentInfoBox = document.getElementById('student-info-box');
-    studentInfoBox.classList.toggle('hidden');
-    studentInfoBox.classList.toggle('flex');
-}
-
-function hideStudentInfoBox() {
-    const studentInfoBox = document.getElementById('student-info-box');
-    studentInfoBox.classList.remove('flex');
-    studentInfoBox.classList.add('hidden');
 }
 
 /**
