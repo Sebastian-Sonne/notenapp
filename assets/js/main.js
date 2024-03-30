@@ -161,7 +161,7 @@ function openStudentInfoTable(student) {
 
     //set button actions
     const deleteButton = document.getElementById('delete-student-button');
-    deleteButton.addEventListener("click", () => deleteStudent(student));
+    deleteButton.addEventListener("click", () => deleteStudent());
 
     //show info box
     toggleStudentInfoBox(true);
@@ -218,28 +218,42 @@ function toggleStudentInfoBox(visible) {
 /*
  * students actions
  */
+let deleteButtonClicked = false;
 
-function deleteStudent(student) {
-    if (typeof (Storage) !== undefined) {
-        //! var confirmation = confirm("Möchten Sie diesen Schüler wirklich löschen? Sie können dies nicht Rückgängig machen.");
+function deleteStudent() {
+    //retrieve studentID
+    const studentID = document.getElementById('info-id').value;
 
-        if (true) {
-            //fetrieve existing data
-            var data = JSON.parse(localStorage.getItem("students")) || [];
+    if (deleteButtonClicked) return; 
+    deleteButtonClicked = true;
 
-            //filter out the student to be deleted
-            var newData = data.filter(function (existingStudent) {
-                // Compare the student objects
-                return JSON.stringify(existingStudent) !== JSON.stringify(student);
-            });
+    //retrieve student data
+    var data = JSON.parse(localStorage.getItem("students")) || [];
 
-            //save change
-            localStorage.setItem("students", JSON.stringify(newData));
-
-            updateTable();
-            toggleStudentInfoBox(false);
+    //find index of to be removed student in student dat
+    var index = -1;
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].id === studentID) {
+            index = i;
+            break;
         }
     }
+
+    //if student with id is found remove it
+    if (index !== -1) {
+        data.splice(index, 1);
+    }
+
+    //save changes
+    localStorage.setItem("students", JSON.stringify(data));
+
+    //update ui
+    updateTable();
+    toggleStudentInfoBox(false);
+
+    setTimeout(() => {
+        deleteButtonClicked = false;
+    }, 100);
 }
 
 /*
