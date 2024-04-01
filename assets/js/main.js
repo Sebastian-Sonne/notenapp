@@ -78,6 +78,7 @@ function toggleNoStudentsFound(visible) {
  * function to update the students table
  */
 function updateTable() {
+    //parse existing student data
     var storedData = JSON.parse(localStorage.getItem("students"));
 
     if (storedData) {
@@ -218,14 +219,13 @@ function toggleStudentInfoBox(visible) {
 /*
  * students actions
  */
-let deleteButtonClicked = false;
 
+/**
+ * function to delete a student
+ */
 function deleteStudent() {
     //retrieve studentID
     const studentID = document.getElementById('info-id').value;
-
-    if (deleteButtonClicked) return; 
-    deleteButtonClicked = true;
 
     //retrieve student data
     var data = JSON.parse(localStorage.getItem("students")) || [];
@@ -250,10 +250,6 @@ function deleteStudent() {
     //update ui
     updateTable();
     toggleStudentInfoBox(false);
-
-    setTimeout(() => {
-        deleteButtonClicked = false;
-    }, 100);
 }
 
 /*
@@ -344,6 +340,9 @@ function addWrittenGrade(placeholder) {
     input.classList = 'writtenGrade w-full mt-2 px-4 py-2 rounded-lg border border-transparent focus:border-green-600 focus:outline-none';
     input.name = 'writtenGrade[]';
     container.appendChild(input);
+
+    //set focus for better ux
+    input.focus();
 }
 
 /**
@@ -371,6 +370,9 @@ function addOralGrade(placeholder) {
     input.classList = 'oralGrade w-full mt-2 px-4 py-2 rounded-lg border border-transparent focus:border-green-600 focus:outline-none';
     input.name = 'oralGrade[]';
     container.appendChild(input);
+
+        //set focus for better ux
+        input.focus();
 }
 
 /**
