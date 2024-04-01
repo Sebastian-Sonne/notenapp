@@ -3,14 +3,14 @@
  */
 document.addEventListener("DOMContentLoaded", function () {
     const newStudentButton = document.getElementById('add-student-button');
-    newStudentButton.addEventListener("click", () => toggleNewStudentBox(true));
+    newStudentButton.addEventListener("click", () => toggleBox('create-new-student-box', true));
 
     //handle keydown events to close overlays
     document.addEventListener('keydown', handleKeyDown);
     function handleKeyDown(event) {
         if (event.key === "Escape") {
-            toggleNewStudentBox(false);
-            toggleStudentInfoBox(false);
+            toggleBox('create-new-student-box', false)
+            toggleBox('student-info-box', false)
         }
     }
 
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
         saveStudentData(studentData);
 
         clearNewStudentBox();
-        toggleNewStudentBox(false);
+        toggleBox('create-new-student-box', false);
     });
 });
 
@@ -65,16 +65,6 @@ function saveStudentData(studentData) {
  */
 
 /**
- * function to toggle the not students found info block
- * @param {*} visible true if set visible
- */
-function toggleNoStudentsFound(visible) {
-    const noStudentsFound = document.getElementById('no-students-found');
-    noStudentsFound.classList.toggle('hidden', !visible);
-    noStudentsFound.classList.toggle('flex', visible);
-}
-
-/**
  * function to update the students table
  */
 function updateTable() {
@@ -82,7 +72,8 @@ function updateTable() {
     var storedData = JSON.parse(localStorage.getItem("students"));
 
     if (storedData) {
-        clearTable();
+        //clear table
+        document.getElementById('students-table-body').innerHTML = '';
 
         //sort student based on their average
         storedData.sort(compareStudents);
@@ -91,12 +82,16 @@ function updateTable() {
         for (var key in storedData) {
             addStudentToTable(storedData[key]);
         }
-        toggleNoStudentsFound(false);
+        toggleBox('no-students-found', false)
     } else {
-        toggleNoStudentsFound(true);
+        toggleBox('no-students-found', true)
     }
 }
 
+/**
+ * function to add a student overview table
+ * @param {*} student student to be added
+ */
 function addStudentToTable(student) {
     const table = document.getElementById('students-table-body');
     var tableItem = document.createElement('tr');
@@ -141,15 +136,6 @@ function createTableCell(content, classList) {
     return element;
 }
 
-/**
- * function to clear the students table
- */
-function clearTable() {
-    const table = document.getElementById('students-table-body');
-    table.innerHTML = '';
-}
-
-
 /*
  * student info table 
  */
@@ -178,7 +164,7 @@ function openStudentInfoTable(student) {
     deleteButton.addEventListener("click", () => deleteStudent());
 
     //show info box
-    toggleStudentInfoBox(true);
+    toggleBox('student-info-box', true)
 }
 
 /**
@@ -213,9 +199,8 @@ function addGradeToStudentInfoTable(table, oralGrade, writtenGrade) {
 /**
  * function to clear the student info grade table
  */
-function clearStudentInfoTable() {
-    const table = document.getElementById('grade-table-body');
-    table.innerHTML = '';
+const clearStudentInfoTable = () => {
+    document.getElementById('grade-table-body').table.innerHTML = '';
 }
 
 /**
@@ -262,7 +247,7 @@ function deleteStudent() {
 
     //update ui
     updateTable();
-    toggleStudentInfoBox(false);
+    toggleBox('student-info-box', false)
 }
 
 /*
@@ -287,7 +272,7 @@ function compareStudents(student1, student2) {
 }
 
 /**
- * function to calculate the average grade of student
+ * function to calculate weighted the average grade of student
  * @param {} student student
  * @returns average as double
  */
@@ -303,6 +288,7 @@ function calculateAverage(student) {
 
     var average = 0;
     if (oralGradesLength + writtenGradesLength > 0) {
+        //calculate average weighted 2writtem / 1oral
         average = (2 * sumWritten + sumOral) / (oralGradesLength + 2 * writtenGradesLength);
     }
 
@@ -312,6 +298,16 @@ function calculateAverage(student) {
     return average;
 }
 
+/**
+ * function to toggle visibility of a html element
+ * @param {*} boxID element id
+ * @param {*} visible visibility
+ */
+function toggleBox(boxID, visible) {
+    const newStudentBox = document.getElementById(boxID);
+    newStudentBox.classList.toggle('hidden', !visible);
+    newStudentBox.classList.toggle('flex', visible);
+}
 /*
  * new student form 
  */
@@ -327,16 +323,6 @@ function clearNewStudentBox() {
     //re add default inputs to grades
     addWrittenGrade(1);
     addOralGrade(2);
-}
-
-/**
- * function to toggle the new student box
- * @param {*} visible true if set visible
- */
-function toggleNewStudentBox(visible) {
-    const newStudentBox = document.getElementById('create-new-student-box');
-    newStudentBox.classList.toggle('hidden', !visible);
-    newStudentBox.classList.toggle('flex', visible);
 }
 
 /**
