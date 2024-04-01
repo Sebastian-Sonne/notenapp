@@ -667,10 +667,6 @@ video {
   margin-top: 1.5rem;
 }
 
-.mt-64 {
-  margin-top: 16rem;
-}
-
 .block {
   display: block;
 }
@@ -737,6 +733,12 @@ video {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.appearance-none {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
 }
 
 .flex-col {

@@ -102,30 +102,35 @@ function addStudentToTable(student) {
     var tableItem = document.createElement('tr');
 
     //set class properties
-    tableItem.classList.add('hover:bg-gray-100');
-    tableItem.classList.add('cursor-pointer');
+    tableItem.classList = 'hover:bg-gray-100 cursor-pointer';
+    tableItem.student = student;
 
+    //add eventListener to open student info
     tableItem.addEventListener('click', function () {
         openStudentInfoTable(student);
     });
 
-    var keys = ['id', 'name', 'email', 'average'];
-
-    keys.forEach(key => {
+    //add id, name, email
+    ['id', 'name', 'email'].forEach(key => {
         if (student.hasOwnProperty(key)) {
-            const element = document.createElement('td');
-            element.classList = 'border px-4 py-2';
-            element.textContent = student[key];
-            tableItem.appendChild(element);
+            tableItem.appendChild(createTableCell(student[key], 'border px-4 py-2'));
         }
     });
 
-    const infoButton = document.createElement('td');
-    infoButton.classList.add('border-y');
-    infoButton.innerHTML = "<a id=\"learn-more-about-student\" class=\"m-2 py-1 px-2 text-center text-white font-semibold bg-notenapp-blue hover:bg-notenapp-blue-hover rounded-lg cursor-pointer transition-all\">Info</a>";
-    tableItem.appendChild(infoButton);
+    const avg = (student.average == 0) ? '-' : student.average;
+    tableItem.appendChild(createTableCell(avg, 'border px-4 py-2'));
+
+    const learnMoreElement = createTableCell("<a id=\"learn-more-about-student\" class=\"m-2 py-1 px-2 text-center text-white font-semibold bg-notenapp-blue hover:bg-notenapp-blue-hover rounded-lg cursor-pointer transition-all\">Info</a>", "border-y");
+    tableItem.appendChild(learnMoreElement);
 
     table.appendChild(tableItem);
+}
+
+function createTableCell(content, classList) {
+    const element = document.createElement('td');
+    element.classList = classList;
+    element.innerHTML = content;
+    return element;
 }
 
 /**
@@ -373,8 +378,8 @@ function addOralGrade(placeholder) {
     input.required = true;
     container.appendChild(input);
 
-        //set focus for better ux
-        input.focus();
+    //set focus for better ux
+    input.focus();
 }
 
 /**
@@ -398,4 +403,23 @@ function clearGradeInputs(containerId) {
     inputs.forEach(input => {
         input.parentNode.removeChild(input);
     });
+}
+
+/*
+ * validate inputs
+ */
+
+function validateId() {
+
+}
+
+function validateWrittenGrades() {
+    const id = document.getElementById('id');
+    const idError = document.getElementById('id-error');
+
+
+}
+
+function validateOralGrade() {
+
 }
