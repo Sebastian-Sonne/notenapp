@@ -117,15 +117,23 @@ function addStudentToTable(student) {
         }
     });
 
+    //add average Grade
     const avg = (student.average == 0) ? '-' : student.average;
     tableItem.appendChild(createTableCell(avg, 'border px-4 py-2'));
 
-    const learnMoreElement = createTableCell("<a id=\"learn-more-about-student\" class=\"m-2 py-1 px-2 text-center text-white font-semibold bg-notenapp-blue hover:bg-notenapp-blue-hover rounded-lg cursor-pointer transition-all\">Info</a>", "border-y");
+    //add learn more button
+    const learnMoreElement = createTableCell("<a class=\"m-2 py-1 px-2 text-center text-white font-semibold bg-notenapp-blue hover:bg-notenapp-blue-hover rounded-lg cursor-pointer transition-all\">Info</a>", "border-y");
     tableItem.appendChild(learnMoreElement);
 
     table.appendChild(tableItem);
 }
 
+/**
+ * function to create a table celle 'td' with content and classes
+ * @param {String} content (html) content of cell
+ * @param {String} classList classlist of cell
+ * @returns html element
+ */
 function createTableCell(content, classList) {
     const element = document.createElement('td');
     element.classList = classList;
