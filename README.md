@@ -1,4 +1,4 @@
-# Teacher Admin Panel
+# Teacher Admin Panel [German]
 
 Welcome to the Teacher Admin Panel, a modern web application designed to manage student information efficiently.
 
