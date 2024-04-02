@@ -2,15 +2,29 @@
  * executed when html content load is complete
  */
 document.addEventListener("DOMContentLoaded", function () {
+    //add new student button action listener
     const newStudentButton = document.getElementById('add-student-button');
     newStudentButton.addEventListener("click", () => toggleBox('create-new-student-box', true));
+
+    //escape delete student sequence button action listener 
+    const escDeleteStudentButton = document.getElementById('escape-delete-student-button');
+    escDeleteStudentButton.addEventListener("click", () => toggleBox('confirm-delete-box', false));
+
+    //open confirm delete student box button action listener
+    const confirmDelteStudentButton = document.getElementById('confirm-delete-student-button');
+    confirmDelteStudentButton.addEventListener("click", () => toggleBox('confirm-delete-box', true));
+
+    //delete student button action listener
+    const deleteStudentButton = document.getElementById('delete-student-button');
+    deleteStudentButton.addEventListener("click", () => deleteStudent());
 
     //handle keydown events to close overlays
     document.addEventListener('keydown', handleKeyDown);
     function handleKeyDown(event) {
         if (event.key === "Escape") {
-            toggleBox('create-new-student-box', false)
-            toggleBox('student-info-box', false)
+            toggleBox('create-new-student-box', false);
+            toggleBox('student-info-box', false);
+            toggleBox('confirm-delete-box', true);
         }
     }
 
@@ -41,13 +55,17 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-function saveStudentData(studentData) {
+/**
+ * function to save a new student to local storage
+ * @param {*} student student object to be added
+ */
+function saveStudentData(student) {
     if (typeof (Storage) !== undefined) {
         //retrive existing data or create empty array
         var data = JSON.parse(localStorage.getItem("students")) || [];
 
         //add new student data to data
-        data.push(studentData);
+        data.push(student);
 
         //save the updated data
         localStorage.setItem("students", JSON.stringify(data));
@@ -59,6 +77,16 @@ function saveStudentData(studentData) {
     }
 }
 
+/**
+ * function to toggle visibility of a html element
+ * @param {*} boxID element id
+ * @param {*} visible visibility
+ */
+function toggleBox(boxID, visible) {
+    const newStudentBox = document.getElementById(boxID);
+    newStudentBox.classList.toggle('hidden', !visible);
+    newStudentBox.classList.toggle('flex', visible);
+}
 
 /*
  * main students table 
@@ -94,33 +122,30 @@ function updateTable() {
  */
 function addStudentToTable(student) {
     const table = document.getElementById('students-table-body');
-    var tableItem = document.createElement('tr');
+    const tableRow = document.createElement('tr');
 
     //set class properties
-    tableItem.classList = 'hover:bg-gray-100 cursor-pointer';
-    tableItem.student = student;
+    tableRow.classList = 'hover:bg-gray-100 cursor-pointer';
 
     //add eventListener to open student info
-    tableItem.addEventListener('click', function () {
-        openStudentInfoTable(student);
-    });
+    tableRow.addEventListener('click', () => openStudentInfoTable(student));
 
     //add id, name, email
     ['id', 'name', 'email'].forEach(key => {
         if (student.hasOwnProperty(key)) {
-            tableItem.appendChild(createTableCell(student[key], 'border px-4 py-2'));
+            tableRow.appendChild(createTableCell(student[key], 'border px-4 py-2'));
         }
     });
 
     //add average Grade
     const avg = (student.average == 0) ? '-' : student.average;
-    tableItem.appendChild(createTableCell(avg, 'border px-4 py-2'));
+    tableRow.appendChild(createTableCell(avg, 'border px-4 py-2'));
 
-    //add learn more button
-    const learnMoreElement = createTableCell("<a class=\"m-2 py-1 px-2 text-center text-white font-semibold bg-notenapp-blue hover:bg-notenapp-blue-hover rounded-lg cursor-pointer transition-all\">Info</a>", "border-y");
-    tableItem.appendChild(learnMoreElement);
+    // Add learn more button
+    const learnMoreHtml = '<a class=\"m-2 py-1 px-2 text-center text-white font-semibold bg-notenapp-blue hover:bg-notenapp-blue-hover rounded-lg cursor-pointer transition-all\">Info</a>';
+    tableRow.appendChild(createTableCell(learnMoreHtml, "border-y"));
 
-    table.appendChild(tableItem);
+    table.appendChild(tableRow);
 }
 
 /**
@@ -150,7 +175,7 @@ function openStudentInfoTable(student) {
     document.getElementById('info-id').value = student.id;
     document.getElementById('info-email').value = student.email;
 
-    //print student grades in table
+    //print student grades to grades table
     clearStudentInfoTable();
     const table = document.getElementById('grade-table-body');
     const length = Math.max(student.oralGrades.length, student.writtenGrades.length);
@@ -158,10 +183,6 @@ function openStudentInfoTable(student) {
     for (let i = 0; i < length; i++) {
         addGradeToStudentInfoTable(table, student.oralGrades[i], student.writtenGrades[i]);
     }
-
-    //set button actions
-    const deleteButton = document.getElementById('delete-student-button');
-    deleteButton.addEventListener("click", () => deleteStudent());
 
     //show info box
     toggleBox('student-info-box', true)
@@ -200,19 +221,8 @@ function addGradeToStudentInfoTable(table, oralGrade, writtenGrade) {
  * function to clear the student info grade table
  */
 const clearStudentInfoTable = () => {
-    document.getElementById('grade-table-body').table.innerHTML = '';
+    document.getElementById('grade-table-body').innerHTML = '';
 }
-
-/**
- * function to toggle te student info box
- * @param {*} visible true if set visible
- */
-function toggleStudentInfoBox(visible) {
-    const studentInfoBox = document.getElementById('student-info-box');
-    studentInfoBox.classList.toggle('hidden', !visible);
-    studentInfoBox.classList.toggle('flex', visible);
-}
-
 
 /*
  * students actions
@@ -247,7 +257,8 @@ function deleteStudent() {
 
     //update ui
     updateTable();
-    toggleBox('student-info-box', false)
+    toggleBox('student-info-box', false);
+    toggleBox('confirm-delete-box', false);
 }
 
 /*
@@ -298,16 +309,6 @@ function calculateAverage(student) {
     return average;
 }
 
-/**
- * function to toggle visibility of a html element
- * @param {*} boxID element id
- * @param {*} visible visibility
- */
-function toggleBox(boxID, visible) {
-    const newStudentBox = document.getElementById(boxID);
-    newStudentBox.classList.toggle('hidden', !visible);
-    newStudentBox.classList.toggle('flex', visible);
-}
 /*
  * new student form 
  */
