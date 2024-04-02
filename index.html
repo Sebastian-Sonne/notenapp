@@ -107,23 +107,32 @@
                 <form id="add-student-form" class="flex flex-col space-y-4">
                     <!-- Name & ID-->
                     <div class="flex flex-wrap -mx-2">
-                        <div class="w-full md:w-1/2 px-2 mt-4">
+                        <div class="w-full md:w-1/2 px-2 mt-4 relative">
                             <label for="name" class="text-gray-800">Name:</label>
                             <input type="text" id="name" name="name" placeholder="Max Musterman" required
                                 class="w-full px-4 py-2 rounded-lg border border-transparent focus:border-green-600 focus:outline-none">
+                            <p id="name-error"
+                                class="absolute top-full left-1/2 -translate-x-1/2 bg-white rounded-lg px-3 py-1 mt-1 text-red-500 hidden z-30">
+                                Inkorrekter Schülername</p> <!--* default error message-->
                         </div>
-                        <div class="w-full md:w-1/2 px-2 mt-4">
+                        <div class="w-full md:w-1/2 px-2 mt-4 relative">
                             <label for="id" class="text-gray-800">Schüler ID:</label>
                             <input type="number" id="id" name="id" placeholder="123456" required
                                 class="w-full px-4 py-2 rounded-lg border border-transparent focus:border-green-600 focus:outline-none">
+                            <p id="id-error"
+                                class="absolute top-full left-1/2 -translate-x-1/2 bg-white rounded-lg px-3 py-1 mt-1 text-red-500 hidden z-30">
+                                Inkorrekte Schüler ID.</p> <!--* default error message-->
                         </div>
                     </div>
 
                     <!-- email-->
-                    <div class="flex flex-col">
+                    <div class="flex flex-col relative">
                         <label for="email" class="text-gray-800">Email:</label>
                         <input type="email" id="email" name="email" placeholder="max@example.com" required
                             class="w-full px-4 py-2 rounded-lg border border-transparent focus:border-green-600 focus:outline-none">
+                        <p id="email-error"
+                            class="absolute top-full left-1/2 -translate-x-1/2 bg-white rounded-lg px-3 py-1 mt-1 text-red-500 hidden z-30">
+                            Inkorrekte Schüler Email</p> <!--* default error message-->
                     </div>
 
                     <!-- Written Grades -->

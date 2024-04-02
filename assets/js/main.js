@@ -20,7 +20,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //add keydown event listener
     document.addEventListener('keydown', handleKeyDown);
-    
+
+    // Validation inputs event listeners
+    ['id', 'name', 'email'].forEach(element => {
+        const input = document.getElementById(element);
+        input.addEventListener('input', () => validateInput(input));
+        input.addEventListener('focusout', () => validateInput(input, true));
+    });
+
     //update table after initial load
     updateTable();
 
@@ -75,7 +82,7 @@ function saveStudentData(student) {
  * @param {*} boxID element id
  * @param {*} visible visibility
  */
-const toggleBox = (boxID, visible) => {
+function toggleBox (boxID, visible) {
     const newStudentBox = document.getElementById(boxID);
     newStudentBox.classList.toggle('hidden', !visible);
     newStudentBox.classList.toggle('flex', visible);
@@ -86,9 +93,9 @@ const toggleBox = (boxID, visible) => {
  * @param {id} boxID id of element to be checked
  * @returns true if element is visible
  */
-const isVisible = (boxID) => {
+function isVisible(boxID) {
     const element = document.getElementById(boxID);
-    return (element.classList.contains('hidden')) ? false : true;
+    return (document.getElementById(boxID).classList.contains('hidden')) ? false : true;
 }
 
 /**
@@ -98,7 +105,7 @@ const isVisible = (boxID) => {
 function handleKeyDown(event) {
     if (event.key === "Escape") {
         if (isVisible('create-new-student-box')) toggleBox('create-new-student-box', false);
-        
+
         if (isVisible('confirm-delete-box')) {
             toggleBox('confirm-delete-box', false);
         } else {
@@ -239,9 +246,7 @@ function addGradeToStudentInfoTable(table, oralGrade, writtenGrade) {
 /**
  * function to clear the student info grade table
  */
-const clearStudentInfoTable = () => {
-    document.getElementById('grade-table-body').innerHTML = '';
-}
+const clearStudentInfoTable = () => document.getElementById('grade-table-body').innerHTML = '';
 
 /*
  * students actions
@@ -423,17 +428,57 @@ function clearGradeInputs(containerId) {
  * validate inputs
  */
 
-function validateId() {
+function validateInput(input, leaving = false) {
+    const value = input.value.trim(); // remove white spaces in beginning and end
+    const errorElement = document.getElementById(input.id + '-error');
+    const errorMessage = getErrorMessage(input.id, value);
+
+    if (errorMessage) {
+        toggleInputErrorBorder(input, true);
+        toggleInputError(errorElement, errorMessage);
+    } else {
+        toggleInputErrorBorder(input, false);
+        toggleInputError(errorElement, '', false);
+    }
+}
+
+function getErrorMessage(inputId, value) {
+    switch (inputId) {
+        case 'id':
+            return value.length < 6 ? 'ID muss mindestens 6 Zeichen lang sein' : (value.length > 16 ? 'ID darf maximal 16 Zeichen lang sein' : '');
+        case 'name':
+            return value.length < 1 ? 'Name ist erforderlich' : (value.length > 40 ? 'Name überschreitet maximale Länge' : '');
+        case 'email':
+            return value.length < 1 ? 'E-Mail ist erforderlich' : (validateEmailPattern(value) ? '' : 'Ungültige E-Mail');
+        default:
+            return '';
+    }
+}
+
+
+function toggleInputError(inputElement, errorMessage, visible = true) {
+    inputElement.textContent = errorMessage;
+    toggleBox(inputElement.id, visible);
+}
+
+function toggleInputErrorBorder(inputElement, visible) {
+    if (visible) {
+        inputElement.classList.add('!border-red-600');
+    } else {
+        inputElement.classList.remove('!border-red-600');
+    }
+}
+
+function validateEmailPattern(email) {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; //email regular expression
+    return emailPattern.test(email);
+}
+
+
+function validateOralGrade() {
 
 }
 
 function validateWrittenGrades() {
-    const id = document.getElementById('id');
-    const idError = document.getElementById('id-error');
-
-
-}
-
-function validateOralGrade() {
 
 }
