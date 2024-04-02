@@ -18,27 +18,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const deleteStudentButton = document.getElementById('delete-student-button');
     deleteStudentButton.addEventListener("click", () => deleteStudent());
 
-    //handle keydown events to close overlays
+    //add keydown event listener
     document.addEventListener('keydown', handleKeyDown);
-    function handleKeyDown(event) {
-        if (event.key === "Escape") {
-            if (isVisible('create-new-student-box')) toggleBox('create-new-student-box', false);
-            
-            if (isVisible('confirm-delete-box')) {
-                toggleBox('confirm-delete-box', false);
-            } else {
-                toggleBox('student-info-box', false);
-            }
-        }
-    }
-
+    
     //update table after initial load
     updateTable();
 
     /**
      * fuction to handle the form submit to add a new student
      */
-    document.getElementById('add-student-form').addEventListener('submit', function (event) {
+    document.getElementById('add-student-form').addEventListener('submit', (event) => {
         event.preventDefault();
 
         // Create student object
@@ -100,6 +89,22 @@ const toggleBox = (boxID, visible) => {
 const isVisible = (boxID) => {
     const element = document.getElementById(boxID);
     return (element.classList.contains('hidden')) ? false : true;
+}
+
+/**
+ * function to handle keyDown evemts
+ * @param {keyEvent} event 
+ */
+function handleKeyDown(event) {
+    if (event.key === "Escape") {
+        if (isVisible('create-new-student-box')) toggleBox('create-new-student-box', false);
+        
+        if (isVisible('confirm-delete-box')) {
+            toggleBox('confirm-delete-box', false);
+        } else {
+            toggleBox('student-info-box', false);
+        }
+    }
 }
 
 /*
