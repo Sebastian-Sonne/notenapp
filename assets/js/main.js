@@ -22,9 +22,13 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener('keydown', handleKeyDown);
     function handleKeyDown(event) {
         if (event.key === "Escape") {
-            toggleBox('create-new-student-box', false);
-            toggleBox('student-info-box', false);
-            toggleBox('confirm-delete-box', true);
+            if (isVisible('create-new-student-box')) toggleBox('create-new-student-box', false);
+            
+            if (isVisible('confirm-delete-box')) {
+                toggleBox('confirm-delete-box', false);
+            } else {
+                toggleBox('student-info-box', false);
+            }
         }
     }
 
@@ -82,10 +86,20 @@ function saveStudentData(student) {
  * @param {*} boxID element id
  * @param {*} visible visibility
  */
-function toggleBox(boxID, visible) {
+const toggleBox = (boxID, visible) => {
     const newStudentBox = document.getElementById(boxID);
     newStudentBox.classList.toggle('hidden', !visible);
     newStudentBox.classList.toggle('flex', visible);
+}
+
+/**
+ * function to check visibility of elements
+ * @param {id} boxID id of element to be checked
+ * @returns true if element is visible
+ */
+const isVisible = (boxID) => {
+    const element = document.getElementById(boxID);
+    return (element.classList.contains('hidden')) ? false : true;
 }
 
 /*
