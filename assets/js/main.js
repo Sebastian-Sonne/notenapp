@@ -82,7 +82,7 @@ function saveStudentData(student) {
  * @param {*} boxID element id
  * @param {*} visible visibility
  */
-function toggleBox (boxID, visible) {
+function toggleBox(boxID, visible) {
     const newStudentBox = document.getElementById(boxID);
     newStudentBox.classList.toggle('hidden', !visible);
     newStudentBox.classList.toggle('flex', visible);
@@ -428,6 +428,11 @@ function clearGradeInputs(containerId) {
  * validate inputs
  */
 
+/**
+ * general function to validate input
+ * @param {*} input input element
+ * @param {*} leaving true if user is leaving input field
+ */
 function validateInput(input, leaving = false) {
     const value = input.value.trim(); // remove white spaces in beginning and end
     const errorElement = document.getElementById(input.id + '-error');
@@ -440,8 +445,16 @@ function validateInput(input, leaving = false) {
         toggleInputErrorBorder(input, false);
         toggleInputError(errorElement, '', false);
     }
+
+    if (leaving) toggleInputError(errorElement, '', false);
 }
 
+/**
+ * function to get the corresponding error message
+ * @param {*} inputId id of input element
+ * @param {*} value value of said element
+ * @returns error message
+ */
 function getErrorMessage(inputId, value) {
     switch (inputId) {
         case 'id':
@@ -455,30 +468,38 @@ function getErrorMessage(inputId, value) {
     }
 }
 
-
+/**
+ * function to toggle the input error element 
+ * @param {*} inputElement input element
+ * @param {*} errorMessage error messge
+ * @param {*} visible true if set visible
+ */
 function toggleInputError(inputElement, errorMessage, visible = true) {
     inputElement.textContent = errorMessage;
     toggleBox(inputElement.id, visible);
 }
 
+/**
+ * function to toggle the borders a input element to react to an error
+ * @param {*} inputElement input element
+ * @param {*} visible true if error exists
+ */
 function toggleInputErrorBorder(inputElement, visible) {
     if (visible) {
+        inputElement.classList.remove('!border-green-600');
         inputElement.classList.add('!border-red-600');
     } else {
+        inputElement.classList.add('!border-green-600');
         inputElement.classList.remove('!border-red-600');
     }
 }
 
+/**
+ * function to validate an email
+ * @param {*} email email to be validated
+ * @returns true if correct
+ */
 function validateEmailPattern(email) {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; //email regular expression
     return emailPattern.test(email);
-}
-
-
-function validateOralGrade() {
-
-}
-
-function validateWrittenGrades() {
-
 }
