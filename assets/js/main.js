@@ -31,9 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //update table after initial load
     updateTable();
 
-    /**
-     * fuction to handle the form submit to add a new student
-     */
+    //fuction to handle the form submit to add a new student
     document.getElementById('add-student-form').addEventListener('submit', (event) => {
         event.preventDefault();
 
@@ -42,9 +40,15 @@ document.addEventListener("DOMContentLoaded", function () {
             id: document.getElementById('id').value,
             name: document.getElementById('name').value,
             email: document.getElementById('email').value,
-            writtenGrades: Array.from(document.getElementsByClassName('writtenGrade')).map(input => input.value),
-            oralGrades: Array.from(document.getElementsByClassName('oralGrade')).map(input => input.value)
+            //convert grade inputs to array of their values, and remove any empty spaces
+            writtenGrades: Array.from(document.getElementsByClassName('writtenGrade'))
+                .map(input => input.value)
+                .filter(value => value.trim() !== ''),
+            oralGrades: Array.from(document.getElementsByClassName('oralGrade'))
+                .map(input => input.value)
+                .filter(value => value.trim() !== '')
         };
+
 
         studentData.average = calculateAverage(studentData);
 
