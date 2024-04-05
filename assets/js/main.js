@@ -4,7 +4,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     //add new student button action listener
     const newStudentButton = document.getElementById('add-student-button');
-    newStudentButton.addEventListener("click", () => toggleBox('create-new-student-box', true));
+    newStudentButton.addEventListener("click", () => openNewStudentBox());
 
     //escape delete student sequence button action listener 
     const escDeleteStudentButton = document.getElementById('escape-delete-student-button');
@@ -17,6 +17,12 @@ document.addEventListener("DOMContentLoaded", function () {
     //delete student button action listener
     const deleteStudentButton = document.getElementById('delete-student-button');
     deleteStudentButton.addEventListener("click", () => deleteStudent());
+
+    //close buttons action listeners
+    ['close-student-info-button', 'close-new-student-box-button'].forEach(element => {
+        element = document.getElementById(element);
+        element.addEventListener("click", () => handleKeyDown(new KeyboardEvent('keydown', { key: 'Escape' })));
+    });
 
     //add keydown event listener
     document.addEventListener('keydown', handleKeyDown);
@@ -55,8 +61,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         //clear, reset and hide form
         clearNewStudentBox();
-        ['id', 'name', 'email'].forEach(id => {toggleInputValidatedBorder(document.getElementById(id), false);});
+        ['id', 'name', 'email'].forEach(id => { toggleInputValidatedBorder(document.getElementById(id), false); });
         toggleBox('create-new-student-box', false);
+        document.body.classList.remove('overflow-hidden');
     });
 });
 
@@ -109,12 +116,16 @@ function isVisible(boxID) {
  */
 function handleKeyDown(event) {
     if (event.key === "Escape") {
-        if (isVisible('create-new-student-box')) toggleBox('create-new-student-box', false);
+        if (isVisible('create-new-student-box')) {
+            toggleBox('create-new-student-box', false);
+            document.body.classList.remove('overflow-hidden');
+        }
 
         if (isVisible('confirm-delete-box')) {
             toggleBox('confirm-delete-box', false);
         } else {
             toggleBox('student-info-box', false);
+            document.body.classList.remove('overflow-hidden');
         }
     }
 }
@@ -216,7 +227,8 @@ function openStudentInfoTable(student) {
     }
 
     //show info box
-    toggleBox('student-info-box', true)
+    toggleBox('student-info-box', true);
+    document.body.classList.add('overflow-hidden');
 }
 
 /**
@@ -341,6 +353,11 @@ function calculateAverage(student) {
 /*
  * new student form 
  */
+
+function openNewStudentBox() {
+    toggleBox('create-new-student-box', true)
+    document.body.classList.add('overflow-hidden');
+}
 
 /**
  * function to clear new student form
@@ -498,7 +515,7 @@ const toggleInputErrorBorder = (inputElement, visible) => {
  * @param {*} inputElement input element
  * @param {*} visible true if set visisble
  */
-const toggleInputValidatedBorder = (inputElement, visible) => {inputElement.classList.toggle('!border-green-600', visible)};
+const toggleInputValidatedBorder = (inputElement, visible) => { inputElement.classList.toggle('!border-green-600', visible) };
 
 
 /**

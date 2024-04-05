@@ -89,13 +89,13 @@
 
     <!--* Add new Student-->
     <section id="create-new-student-box"
-        class="hidden justify-center absolute top-0 left-0 w-full h-full backdrop-brightness-50 backdrop-blur-sm z-20">
+        class="hidden justify-center fixed top-0 left-0 w-full h-full backdrop-brightness-50 backdrop-blur-sm overflow-y-auto z-20">
         <div class="sm:max-w-4xl w-full mx-auto my-auto p-4">
             <div class="p-6 bg-gray-100 rounded-lg shadow-lg">
                 <div class="flex justify-between">
                     <h2 class="text-2xl font-semibold text-gray-800">Schüler Hinzufügen</h2>
 
-                    <button type="button" onclick="toggleBox('create-new-student-box',false)"
+                    <button type="button" id="close-new-student-box-button"
                         class="flex items-center justify-center px-4 py-2 rounded-lg text-white hover:bg-red-600 transition-all">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <line x1="4" y1="4" x2="20" y2="20" stroke="#1f2937" stroke-width="3" />
@@ -208,13 +208,13 @@
 
     <!--* Show Student Info-->
     <section id="student-info-box"
-        class="hidden justify-center absolute top-0 left-0 w-full h-full backdrop-brightness-50 backdrop-blur-sm z-20">
+        class="hidden justify-center fixed top-0 left-0 w-full h-full backdrop-brightness-50 backdrop-blur-sm overflow-y-auto z-20">
         <div class="sm:max-w-4xl w-full mx-auto my-auto p-4">
             <div class="p-6 bg-gray-100 rounded-lg shadow-lg">
                 <div class="flex justify-between">
                     <h2 class="text-2xl font-semibold text-gray-800">Schüler Info</h2>
 
-                    <button type="button" onclick="toggleBox('student-info-box', false)"
+                    <button id="close-student-info-button" type="button"
                         class="flex items-center justify-center  px-4 py-2 rounded-lg text-white hover:bg-red-600 transition-all">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <line x1="4" y1="4" x2="20" y2="20" stroke="#1f2937" stroke-width="3" />
@@ -283,7 +283,7 @@
 
     <!--* delete confirmation-->
     <section id="confirm-delete-box"
-        class="hidden ustify-center absolute top-0 left-0 w-full h-full backdrop-brightness-50 backdrop-blur-sm z-20">
+        class="hidden ustify-center fixed top-0 left-0 w-full h-full backdrop-brightness-50 backdrop-blur-sm z-20">
         <div id="delete-student-box" class="sm:max-w-2xl w-full mx-auto mb-auto p-4 z-30">
             <div class="p-6 bg-gray-100 rounded-lg shadow-lg">
                 <div class="flex flex-col">
