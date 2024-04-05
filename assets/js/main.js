@@ -298,6 +298,7 @@ function deleteStudent() {
 
     //update ui
     updateTable();
+    document.body.classList.remove('overflow-hidden');
     toggleBox('student-info-box', false);
     toggleBox('confirm-delete-box', false);
 }
