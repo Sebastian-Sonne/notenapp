@@ -487,23 +487,19 @@ function toggleInputError(inputElement, errorMessage, visible = true) {
  * @param {*} inputElement input element
  * @param {*} visible true if error exists
  */
-function toggleInputErrorBorder(inputElement, visible) {
-    if (visible) {
-        toggleInputValidatedBorder(inputElement, false);
-        inputElement.classList.add('!border-red-600');
-    } else {
-        toggleInputValidatedBorder(inputElement, true);
-        inputElement.classList.remove('!border-red-600');
-    }
-}
+const toggleInputErrorBorder = (inputElement, visible) => {
+    toggleInputValidatedBorder(inputElement, !visible);
+    inputElement.classList.toggle('!border-red-600', visible);
+};
 
-function toggleInputValidatedBorder(inputElement, visible) {
-    if (visible) {
-        inputElement.classList.add('!border-green-600');
-    } else {
-        inputElement.classList.remove('!border-green-600');
-    }
-}
+
+/**
+ * function to toggle the input validation success border
+ * @param {*} inputElement input element
+ * @param {*} visible true if set visisble
+ */
+const toggleInputValidatedBorder = (inputElement, visible) => {inputElement.classList.toggle('!border-green-600', visible)};
+
 
 /**
  * function to validate an email
