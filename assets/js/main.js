@@ -368,7 +368,6 @@ function addWrittenGrade(placeholder) {
     }
     input.classList = 'writtenGrade w-full mt-2 px-4 py-2 rounded-lg border border-transparent focus:border-green-600 focus:outline-none';
     input.name = 'writtenGrade[]';
-    input.required = true;
     container.appendChild(input);
 
     //set focus for better ux
@@ -399,7 +398,6 @@ function addOralGrade(placeholder) {
     }
     input.classList = 'oralGrade w-full mt-2 px-4 py-2 rounded-lg border border-transparent focus:border-green-600 focus:outline-none';
     input.name = 'oralGrade[]';
-    input.required = true;
     container.appendChild(input);
 
     //set focus for better ux
