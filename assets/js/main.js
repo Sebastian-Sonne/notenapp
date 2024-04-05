@@ -49,12 +49,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 .filter(value => value.trim() !== '')
         };
 
-
         studentData.average = calculateAverage(studentData);
 
         saveStudentData(studentData);
 
+        //clear, reset and hide form
         clearNewStudentBox();
+        ['id', 'name', 'email'].forEach(id => {toggleInputValidatedBorder(document.getElementById(id), false);});
         toggleBox('create-new-student-box', false);
     });
 });
@@ -490,11 +491,19 @@ function toggleInputError(inputElement, errorMessage, visible = true) {
  */
 function toggleInputErrorBorder(inputElement, visible) {
     if (visible) {
-        inputElement.classList.remove('!border-green-600');
+        toggleInputValidatedBorder(inputElement, false);
         inputElement.classList.add('!border-red-600');
     } else {
-        inputElement.classList.add('!border-green-600');
+        toggleInputValidatedBorder(inputElement, true);
         inputElement.classList.remove('!border-red-600');
+    }
+}
+
+function toggleInputValidatedBorder(inputElement, visible) {
+    if (visible) {
+        inputElement.classList.add('!border-green-600');
+    } else {
+        inputElement.classList.remove('!border-green-600');
     }
 }
 
