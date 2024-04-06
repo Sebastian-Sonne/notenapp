@@ -3,20 +3,14 @@
  */
 document.addEventListener("DOMContentLoaded", function () {
     //setup button event listeners
-    setupButtonActionListeners();
+    setupButtonEventListeners();
 
     //add keydown event listener
     document.addEventListener('keydown', handleKeyDown);
 
-    // Validation inputs event listeners
-    ['id', 'name', 'email'].forEach(element => {
-        const input = document.getElementById(element);
-        input.addEventListener('input', () => validateInput(input));
-        input.addEventListener('focusout', () => validateInput(input, true));
-    });
-
-    //add form submit action listener
+    //add form event listener
     document.getElementById('add-student-form').addEventListener('submit', handleFormSubmit);
+    setupInputEventListeners();
 
     //update table after initial load
     updateTable();
@@ -88,7 +82,7 @@ function handleKeyDown(event) {
 /**
  * function to add the button event listeners
  */
-function setupButtonActionListeners() {
+function setupButtonEventListeners() {
     //add new student button action listener
     const newStudentButton = document.getElementById('add-student-button');
     newStudentButton.addEventListener("click", () => openNewStudentBox());
@@ -109,6 +103,17 @@ function setupButtonActionListeners() {
     ['close-student-info-button', 'close-new-student-box-button'].forEach(element => {
         element = document.getElementById(element);
         element.addEventListener("click", () => handleKeyDown(new KeyboardEvent('keydown', { key: 'Escape' })));
+    });
+}
+
+/**
+ * function to setup the form input event listeners
+ */
+function setupInputEventListeners() {
+    ['id', 'name', 'email'].forEach(element => {
+        const input = document.getElementById(element);
+        input.addEventListener('input', () => validateInput(input));
+        input.addEventListener('focusout', () => validateInput(input, true));
     });
 }
 
@@ -348,6 +353,9 @@ function handleFormSubmit(event) {
     if (!validateForm()) submitNewStudent();
 }
 
+/**
+ * function to submit a new student
+ */
 function submitNewStudent() {
     // Create student object
     var studentData = {
