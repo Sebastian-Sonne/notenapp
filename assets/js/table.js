@@ -1,3 +1,5 @@
+import * as toggleModule from './toggle.js';
+
 /**
  * function to add a student overview table
  * @param {*} student student to be added
@@ -9,7 +11,7 @@ export function addStudentToTable(student) {
     //set class properties
     tableRow.classList = 'hover:bg-gray-100 cursor-pointer';
 
-    //add eventListener to open student info
+    // add eventListener to open student info
     tableRow.addEventListener('click', () => openStudentInfoTable(student));
 
     //add id, name, email
@@ -42,3 +44,61 @@ function createTableCell(content, classList) {
     element.innerHTML = content;
     return element;
 }
+
+/**
+ * function to open the student properties for a student
+ * @param {*} student 
+ */
+function openStudentInfoTable(student) {
+    //assign student values to info box   
+    document.getElementById('info-name').value = student.name;
+    document.getElementById('info-id').value = student.id;
+    document.getElementById('info-email').value = student.email;
+
+    //print student grades to grades table
+    clearStudentInfoTable();
+    const table = document.getElementById('grade-table-body');
+    const length = Math.max(student.oralGrades.length, student.writtenGrades.length);
+
+    for (let i = 0; i < length; i++) {
+        addGradeToStudentInfoTable(table, student.oralGrades[i], student.writtenGrades[i]);
+    }
+
+    //show info box
+    toggleModule.toggleBox('student-info-box', true);
+    document.body.classList.add('overflow-hidden');
+}
+
+/**
+ * function to add a pair of oral and written grades to the student info talbe
+ * @param {*} table student info grades table
+ * @param {*} oralGrade 
+ * @param {*} writtenGrade 
+ */
+function addGradeToStudentInfoTable(table, oralGrade, writtenGrade) {
+    const tableItem = document.createElement('tr');
+
+    //helper function to set up grade table element
+    const createGradeElement = (grade) => {
+        const gradeElement = document.createElement('td');
+        gradeElement.classList = 'border px-4 py-2';
+        gradeElement.textContent = (grade !== undefined) ? grade : '-';
+        return gradeElement;
+    };
+
+    //create grade elements using helper function
+    const writtenGradeElement = createGradeElement(writtenGrade);
+    const oralGradeElement = createGradeElement(oralGrade);
+
+    //add grades to table row
+    tableItem.appendChild(writtenGradeElement);
+    tableItem.appendChild(oralGradeElement);
+
+    //add table row to table
+    table.appendChild(tableItem);
+}
+
+/**
+ * function to clear the student info grade table
+ */
+const clearStudentInfoTable = () => document.getElementById('grade-table-body').innerHTML = '';
