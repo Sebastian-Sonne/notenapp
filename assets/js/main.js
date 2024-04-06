@@ -277,24 +277,12 @@ const clearStudentInfoTable = () => document.getElementById('grade-table-body').
  */
 function deleteStudent() {
     //retrieve studentID
-    const studentID = document.getElementById('info-id').value;
+    const studentId = document.getElementById('info-id').value;
 
     //retrieve student data
     var data = JSON.parse(localStorage.getItem('students')) || [];
 
-    //find index of to be removed student in student dat
-    var index = -1;
-    for (var i = 0; i < data.length; i++) {
-        if (data[i].id === studentID) {
-            index = i;
-            break;
-        }
-    }
-
-    //if student with id is found remove it
-    if (index !== -1) {
-        data.splice(index, 1);
-    }
+    data = studentModule.deleteStudent(studentId, data);
 
     //save changes
     localStorage.setItem('students', JSON.stringify(data));

@@ -1,9 +1,24 @@
-export function saveStudent(student) {
-    // Code for saving student data
-}
+/**
+ * function to delete student from array of students using id
+ * @param {*} studentId id of student to be deleted
+ * @param {*} data students
+ * @returns modified data
+ */
+export function deleteStudent(studentId, data) {
+    var index = -1;
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].id === studentId) {
+            index = i;
+            break;
+        }
+    }
 
-export function deleteStudent(studentId) {
-    // Code for deleting a student
+    //if student with id is found remove it
+    if (index !== -1) {
+        data.splice(index, 1);
+    }
+
+    return data;
 }
 
 /**
