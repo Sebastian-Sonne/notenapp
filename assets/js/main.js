@@ -1,7 +1,9 @@
+import * as studentModule from './student.js';
+
 /**
  * executed when html content load is complete
  */
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener('DOMContentLoaded', function () {
     //setup button event listeners
     setupButtonEventListeners();
 
@@ -23,13 +25,13 @@ document.addEventListener("DOMContentLoaded", function () {
 function saveStudentData(student) {
     if (typeof (Storage) !== undefined) {
         //retrive existing data or create empty array
-        var data = JSON.parse(localStorage.getItem("students")) || [];
+        var data = JSON.parse(localStorage.getItem('students')) || [];
 
         //add new student data to data
         data.push(student);
 
         //save the updated data
-        localStorage.setItem("students", JSON.stringify(data));
+        localStorage.setItem('students', JSON.stringify(data));
 
         updateTable();
     } else {
@@ -64,7 +66,7 @@ function isVisible(boxID) {
  * @param {keyEvent} event 
  */
 function handleKeyDown(event) {
-    if (event.key === "Escape") {
+    if (event.key === 'Escape') {
         if (isVisible('create-new-student-box')) {
             toggleBox('create-new-student-box', false);
             document.body.classList.remove('overflow-hidden');
@@ -85,25 +87,39 @@ function handleKeyDown(event) {
 function setupButtonEventListeners() {
     //add new student button action listener
     const newStudentButton = document.getElementById('add-student-button');
-    newStudentButton.addEventListener("click", () => openNewStudentBox());
+    newStudentButton.addEventListener('click', () => openNewStudentBox());
 
     //escape delete student sequence button action listener 
     const escDeleteStudentButton = document.getElementById('escape-delete-student-button');
-    escDeleteStudentButton.addEventListener("click", () => toggleBox('confirm-delete-box', false));
+    escDeleteStudentButton.addEventListener('click', () => toggleBox('confirm-delete-box', false));
 
     //open confirm delete student box button action listener
     const confirmDelteStudentButton = document.getElementById('confirm-delete-student-button');
-    confirmDelteStudentButton.addEventListener("click", () => toggleBox('confirm-delete-box', true));
+    confirmDelteStudentButton.addEventListener('click', () => toggleBox('confirm-delete-box', true));
 
     //delete student button action listener
     const deleteStudentButton = document.getElementById('delete-student-button');
-    deleteStudentButton.addEventListener("click", () => deleteStudent());
+    deleteStudentButton.addEventListener('click', () => deleteStudent());
 
     //close buttons action listeners
     ['close-student-info-button', 'close-new-student-box-button'].forEach(element => {
         element = document.getElementById(element);
-        element.addEventListener("click", () => handleKeyDown(new KeyboardEvent('keydown', { key: 'Escape' })));
+        element.addEventListener('click', () => handleKeyDown(new KeyboardEvent('keydown', { key: 'Escape' })));
     });
+
+    const addWrittenGradeButton = document.getElementById('add-written-grade-button');
+    addWrittenGradeButton.addEventListener('click', () => addWrittenGrade());
+
+    const removeWrittenGradeButton = document.getElementById('remove-written-grade-button');
+    removeWrittenGradeButton.addEventListener('click', () => removeWrittenGrade());
+
+    const addOralGradeButton = document.getElementById('add-oral-grade-button');
+    addOralGradeButton.addEventListener('click', () => addOralGrade());
+
+    const removeOralGradeButton = document.getElementById('remove-oral-grade-button');
+    removeOralGradeButton.addEventListener('click', () => removeOralGrade());
+
+    
 }
 
 /**
@@ -126,14 +142,14 @@ function setupInputEventListeners() {
  */
 function updateTable() {
     //parse existing student data
-    var storedData = JSON.parse(localStorage.getItem("students"));
+    var storedData = JSON.parse(localStorage.getItem('students'));
 
     if (storedData) {
         //clear table
         document.getElementById('students-table-body').innerHTML = '';
 
         //sort student based on their average
-        storedData.sort(compareStudents);
+        storedData.sort(studentModule.compareStudents);
 
         //add students to table
         for (var key in storedData) {
@@ -172,7 +188,7 @@ function addStudentToTable(student) {
 
     // Add learn more button
     const learnMoreHtml = '<a class=\"m-2 py-1 px-2 text-center text-white font-semibold bg-notenapp-blue hover:bg-notenapp-blue-hover rounded-lg cursor-pointer transition-all\">Info</a>';
-    tableRow.appendChild(createTableCell(learnMoreHtml, "border-y"));
+    tableRow.appendChild(createTableCell(learnMoreHtml, 'border-y'));
 
     table.appendChild(tableRow);
 }
@@ -264,7 +280,7 @@ function deleteStudent() {
     const studentID = document.getElementById('info-id').value;
 
     //retrieve student data
-    var data = JSON.parse(localStorage.getItem("students")) || [];
+    var data = JSON.parse(localStorage.getItem('students')) || [];
 
     //find index of to be removed student in student dat
     var index = -1;
@@ -281,7 +297,7 @@ function deleteStudent() {
     }
 
     //save changes
-    localStorage.setItem("students", JSON.stringify(data));
+    localStorage.setItem('students', JSON.stringify(data));
 
     //update ui
     updateTable();

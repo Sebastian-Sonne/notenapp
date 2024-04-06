@@ -8,7 +8,7 @@
     <link rel="icon" href="https://www.notenapp.com/wp-content/uploads/2023/08/cropped-ios-marketing-32x32.png">
     <link rel="stylesheet" href="/assets/css/styles.css">
     <link rel="stylesheet" href="/assets/css/custom.css">
-    <script src="/assets/js/main.js"></script>
+    <script type="module" src="/assets/js/main.js"></script>
     <title>Lehrer Admin Panel</title>
 </head>
 
@@ -149,7 +149,7 @@
                             </div>
                         </div>
                         <div class="w-full md:w-1/4 px-2 flex items-end">
-                            <button type="button" onclick="addWrittenGrade()"
+                            <button id="add-written-grade-button" type="button"
                                 class="flex items-center justify-center mt-2 md:mt-0 w-full px-4 py-2 rounded-lg bg-notenapp-blue text-white hover:bg-notenapp-blue-hover transition-all">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -157,7 +157,7 @@
                                     <line x1="4" y1="12" x2="20" y2="12" stroke="white" stroke-width="2" />
                                 </svg>
                             </button>
-                            <button type="button" onclick="removeWrittenGrade()"
+                            <button id="remove-written-grade-button" type="button"
                                 class="flex items-center justify-center mt-2 md:mt-0 w-full px-4 py-2 ml-4 rounded-lg bg-red-700 text-white hover:bg-red-600 transition-all">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -178,7 +178,7 @@
                             </div>
                         </div>
                         <div class="w-full md:w-1/4 px-2 flex items-end">
-                            <button type="button" onclick="addOralGrade()"
+                            <button id="add-oral-grade-button" type="button"
                                 class="flex items-center justify-center mt-2 md:mt-0 w-full px-4 py-2 rounded-lg bg-notenapp-blue text-white hover:bg-notenapp-blue-hover transition-all">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -186,7 +186,7 @@
                                     <line x1="4" y1="12" x2="20" y2="12" stroke="white" stroke-width="2" />
                                 </svg>
                             </button>
-                            <button type="button" onclick="removeOralGrade()"
+                            <button id="remove-oral-grade-button" type="button"
                                 class="flex items-center justify-center mt-2 md:mt-0 w-full px-4 py-2 ml-4 rounded-lg bg-red-700 text-white hover:bg-red-600 transition-all">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
