@@ -1,6 +1,6 @@
 import * as studentModule from './student.js';
 import * as tableModule from './table.js';
-import * as formModule from './form.js';
+import * as toggleModule from './toggle.js';
 
 /**
  * executed when html content load is complete
@@ -43,41 +43,20 @@ function saveStudentData(student) {
 }
 
 /**
- * function to toggle visibility of a html element
- * @param {*} boxID element id
- * @param {*} visible visibility
- */
-function toggleBox(boxID, visible) {
-    const box = document.getElementById(boxID);
-    box.classList.toggle('hidden', !visible);
-    box.classList.toggle('flex', visible);
-}
-
-/**
- * function to check visibility of elements
- * @param {id} boxID id of element to be checked
- * @returns true if element is visible
- */
-function isVisible(boxID) {
-    const element = document.getElementById(boxID);
-    return (document.getElementById(boxID).classList.contains('hidden')) ? false : true;
-}
-
-/**
  * function to handle keyDown evemts
  * @param {keyEvent} event 
  */
 function handleKeyDown(event) {
     if (event.key === 'Escape') {
-        if (isVisible('create-new-student-box')) {
-            toggleBox('create-new-student-box', false);
+        if (toggleModule.isVisible('create-new-student-box')) {
+            toggleModule.toggleBox('create-new-student-box', false);
             document.body.classList.remove('overflow-hidden');
         }
 
-        if (isVisible('confirm-delete-box')) {
-            toggleBox('confirm-delete-box', false);
+        if (toggleModule.isVisible('confirm-delete-box')) {
+            toggleModule.toggleBox('confirm-delete-box', false);
         } else {
-            toggleBox('student-info-box', false);
+            toggleModule.toggleBox('student-info-box', false);
             document.body.classList.remove('overflow-hidden');
         }
     }
@@ -93,11 +72,11 @@ function setupButtonEventListeners() {
 
     //escape delete student sequence button action listener 
     const escDeleteStudentButton = document.getElementById('escape-delete-student-button');
-    escDeleteStudentButton.addEventListener('click', () => toggleBox('confirm-delete-box', false));
+    escDeleteStudentButton.addEventListener('click', () => toggleModule.toggleBox('confirm-delete-box', false));
 
     //open confirm delete student box button action listener
     const confirmDelteStudentButton = document.getElementById('confirm-delete-student-button');
-    confirmDelteStudentButton.addEventListener('click', () => toggleBox('confirm-delete-box', true));
+    confirmDelteStudentButton.addEventListener('click', () => toggleModule.toggleBox('confirm-delete-box', true));
 
     //delete student button action listener
     const deleteStudentButton = document.getElementById('delete-student-button');
@@ -157,9 +136,9 @@ function updateTable() {
         for (var key in storedData) {
             tableModule.addStudentToTable(storedData[key]);
         }
-        toggleBox('no-students-found', false)
+        toggleModule.toggleBox('no-students-found', false)
     } else {
-        toggleBox('no-students-found', true)
+        toggleModule.toggleBox('no-students-found', true)
     }
 }
 
@@ -185,8 +164,8 @@ function deleteStudent() {
     //update ui
     updateTable();
     document.body.classList.remove('overflow-hidden');
-    toggleBox('student-info-box', false);
-    toggleBox('confirm-delete-box', false);
+    toggleModule.toggleBox('student-info-box', false);
+    toggleModule.toggleBox('confirm-delete-box', false);
 }
 
 /*
@@ -230,7 +209,7 @@ function submitNewStudent() {
     //clear, reset and hide form
     clearNewStudentBox();
     ['id', 'name', 'email'].forEach(id => { toggleInputValidatedBorder(document.getElementById(id), false); });
-    toggleBox('create-new-student-box', false);
+    toggleModule.toggleBox('create-new-student-box', false);
     document.body.classList.remove('overflow-hidden');
 }
 
@@ -238,7 +217,7 @@ function submitNewStudent() {
  * function to open the new student box
  */
 function openNewStudentBox() {
-    toggleBox('create-new-student-box', true)
+    toggleModule.toggleBox('create-new-student-box', true)
     document.body.classList.add('overflow-hidden');
 }
 
@@ -394,7 +373,7 @@ function getErrorMessage(inputId, value) {
  */
 function toggleInputError(inputElement, errorMessage, visible = true) {
     inputElement.textContent = errorMessage;
-    toggleBox(inputElement.id, visible);
+    toggleModule.toggleBox(inputElement.id, visible);
 }
 
 /**
