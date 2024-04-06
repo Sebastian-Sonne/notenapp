@@ -1,7 +1,17 @@
-export function loadData() {
-    // Code for loading data from local storage
+/**
+ * function to get data from local storage
+ * @param {*} key key of data
+ * @returns data
+ */
+export function loadData(key) {
+    return JSON.parse(localStorage.getItem(key)) || [];
 }
 
-export function saveData(data) {
-    // Code for saving data to local storage
+/**
+ * function to save data at key to local storage
+ * @param {*} key data key
+ * @param {*} data data
+ */
+export function saveData(key, data) {
+    localStorage.setItem(key, JSON.stringify(data));
 }

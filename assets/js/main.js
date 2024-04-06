@@ -1,6 +1,7 @@
 import * as studentModule from './student.js';
 import * as tableModule from './table.js';
 import * as toggleModule from './toggle.js';
+import * as storageModule from './storage.js';
 
 /**
  * executed when html content load is complete
@@ -27,18 +28,18 @@ document.addEventListener('DOMContentLoaded', function () {
 function saveStudentData(student) {
     if (typeof (Storage) !== undefined) {
         //retrive existing data or create empty array
-        var data = JSON.parse(localStorage.getItem('students')) || [];
+        var data = storageModule.loadData('students');
 
         //add new student data to data
         data.push(student);
 
         //save the updated data
-        localStorage.setItem('students', JSON.stringify(data));
+        storageModule.saveData('students', data)
 
         updateTable();
     } else {
         console.log('Dein Browser unterstützt kein local storage :(');
-        //! handle error
+        //! @me handle error
     }
 }
 
@@ -123,18 +124,18 @@ function setupInputEventListeners() {
  */
 function updateTable() {
     //parse existing student data
-    var storedData = JSON.parse(localStorage.getItem('students'));
+    var data = storageModule.loadData('students');
 
-    if (storedData) {
+    if (data) {
         //clear table
         document.getElementById('students-table-body').innerHTML = '';
 
         //sort student based on their average
-        storedData.sort(studentModule.compareStudents);
+        data.sort(studentModule.compareStudents);
 
         //add students to table
-        for (var key in storedData) {
-            tableModule.addStudentToTable(storedData[key]);
+        for (var key in data) {
+            tableModule.addStudentToTable(data[key]);
         }
         toggleModule.toggleBox('no-students-found', false)
     } else {
@@ -154,12 +155,12 @@ function deleteStudent() {
     const studentId = document.getElementById('info-id').value;
 
     //retrieve student data
-    var data = JSON.parse(localStorage.getItem('students')) || [];
+    var data = storageModule.loadData('students');
 
     data = studentModule.deleteStudent(studentId, data);
 
     //save changes
-    localStorage.setItem('students', JSON.stringify(data));
+    storageModule.saveData('students', data);
 
     //update ui
     updateTable();
