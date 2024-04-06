@@ -2,27 +2,8 @@
  * executed when html content load is complete
  */
 document.addEventListener("DOMContentLoaded", function () {
-    //add new student button action listener
-    const newStudentButton = document.getElementById('add-student-button');
-    newStudentButton.addEventListener("click", () => openNewStudentBox());
-
-    //escape delete student sequence button action listener 
-    const escDeleteStudentButton = document.getElementById('escape-delete-student-button');
-    escDeleteStudentButton.addEventListener("click", () => toggleBox('confirm-delete-box', false));
-
-    //open confirm delete student box button action listener
-    const confirmDelteStudentButton = document.getElementById('confirm-delete-student-button');
-    confirmDelteStudentButton.addEventListener("click", () => toggleBox('confirm-delete-box', true));
-
-    //delete student button action listener
-    const deleteStudentButton = document.getElementById('delete-student-button');
-    deleteStudentButton.addEventListener("click", () => deleteStudent());
-
-    //close buttons action listeners
-    ['close-student-info-button', 'close-new-student-box-button'].forEach(element => {
-        element = document.getElementById(element);
-        element.addEventListener("click", () => handleKeyDown(new KeyboardEvent('keydown', { key: 'Escape' })));
-    });
+    //setup button event listeners
+    setupButtonActionListeners();
 
     //add keydown event listener
     document.addEventListener('keydown', handleKeyDown);
@@ -34,37 +15,11 @@ document.addEventListener("DOMContentLoaded", function () {
         input.addEventListener('focusout', () => validateInput(input, true));
     });
 
+    //add form submit action listener
+    document.getElementById('add-student-form').addEventListener('submit', handleFormSubmit);
+
     //update table after initial load
     updateTable();
-
-    //fuction to handle the form submit to add a new student
-    document.getElementById('add-student-form').addEventListener('submit', (event) => {
-        event.preventDefault();
-
-        // Create student object
-        var studentData = {
-            id: document.getElementById('id').value,
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            //convert grade inputs to array of their values, and remove any empty spaces
-            writtenGrades: Array.from(document.getElementsByClassName('writtenGrade'))
-                .map(input => input.value)
-                .filter(value => value.trim() !== ''),
-            oralGrades: Array.from(document.getElementsByClassName('oralGrade'))
-                .map(input => input.value)
-                .filter(value => value.trim() !== '')
-        };
-
-        studentData.average = calculateAverage(studentData);
-
-        saveStudentData(studentData);
-
-        //clear, reset and hide form
-        clearNewStudentBox();
-        ['id', 'name', 'email'].forEach(id => { toggleInputValidatedBorder(document.getElementById(id), false); });
-        toggleBox('create-new-student-box', false);
-        document.body.classList.remove('overflow-hidden');
-    });
 });
 
 /**
@@ -128,6 +83,33 @@ function handleKeyDown(event) {
             document.body.classList.remove('overflow-hidden');
         }
     }
+}
+
+/**
+ * function to add the button event listeners
+ */
+function setupButtonActionListeners() {
+    //add new student button action listener
+    const newStudentButton = document.getElementById('add-student-button');
+    newStudentButton.addEventListener("click", () => openNewStudentBox());
+
+    //escape delete student sequence button action listener 
+    const escDeleteStudentButton = document.getElementById('escape-delete-student-button');
+    escDeleteStudentButton.addEventListener("click", () => toggleBox('confirm-delete-box', false));
+
+    //open confirm delete student box button action listener
+    const confirmDelteStudentButton = document.getElementById('confirm-delete-student-button');
+    confirmDelteStudentButton.addEventListener("click", () => toggleBox('confirm-delete-box', true));
+
+    //delete student button action listener
+    const deleteStudentButton = document.getElementById('delete-student-button');
+    deleteStudentButton.addEventListener("click", () => deleteStudent());
+
+    //close buttons action listeners
+    ['close-student-info-button', 'close-new-student-box-button'].forEach(element => {
+        element = document.getElementById(element);
+        element.addEventListener("click", () => handleKeyDown(new KeyboardEvent('keydown', { key: 'Escape' })));
+    });
 }
 
 /*
@@ -355,6 +337,47 @@ function calculateAverage(student) {
  * new student form 
  */
 
+/**
+ * function to handle the new student from submit
+ * @param {*} event submit event
+ */
+function handleFormSubmit(event) {
+    event.preventDefault();
+
+    //if form valid, submit student
+    if (!validateForm()) submitNewStudent();
+}
+
+function submitNewStudent() {
+    // Create student object
+    var studentData = {
+        id: document.getElementById('id').value,
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        //convert grade inputs to array of their values, and remove any empty spaces
+        writtenGrades: Array.from(document.getElementsByClassName('writtenGrade'))
+            .map(input => input.value)
+            .filter(value => value.trim() !== ''),
+        oralGrades: Array.from(document.getElementsByClassName('oralGrade'))
+            .map(input => input.value)
+            .filter(value => value.trim() !== '')
+    };
+
+    studentData.average = calculateAverage(studentData);
+
+    //save student data to local storage
+    saveStudentData(studentData);
+
+    //clear, reset and hide form
+    clearNewStudentBox();
+    ['id', 'name', 'email'].forEach(id => { toggleInputValidatedBorder(document.getElementById(id), false); });
+    toggleBox('create-new-student-box', false);
+    document.body.classList.remove('overflow-hidden');
+}
+
+/**
+ * function to open the new student box
+ */
 function openNewStudentBox() {
     toggleBox('create-new-student-box', true)
     document.body.classList.add('overflow-hidden');
@@ -450,9 +473,22 @@ function clearGradeInputs(containerId) {
  */
 
 /**
+ * function to validate the add new student form
+ * @returns true if invalid
+ */
+function validateForm() {
+    const idElement = document.getElementById('id');
+    const nameElement = document.getElementById('name');
+    const emailElement = document.getElementById('email');
+
+    return (validateInput(idElement) || validateInput(nameElement) || validateInput(emailElement));
+}
+
+/**
  * general function to validate input
  * @param {*} input input element
  * @param {*} leaving true if user is leaving input field
+ * @returns true if invalid
  */
 function validateInput(input, leaving = false) {
     const value = input.value.trim(); // remove white spaces in beginning and end
@@ -468,6 +504,8 @@ function validateInput(input, leaving = false) {
     }
 
     if (leaving) toggleInputError(errorElement, '', false);
+
+    return (errorMessage) ? true : false;
 }
 
 /**
