@@ -23,6 +23,29 @@ export function compareStudents(student1, student2) {
     return student1.average - student2.average;
 }
 
+/**
+ * function to calculate weighted the average grade of student
+ * @param {} student student
+ * @returns average as double
+ */
 export function calculateAverage(student) {
-    // Code for calculating average grade
+    var oralGrades = student.oralGrades;
+    const oralGradesLength = oralGrades.length;
+
+    var writtenGrades = student.writtenGrades;
+    const writtenGradesLength = writtenGrades.length;
+
+    var sumOral = oralGrades.reduce((acc, grade) => acc + parseFloat(grade), 0);
+    var sumWritten = writtenGrades.reduce((acc, grade) => acc + parseFloat(grade), 0);
+
+    var average = 0;
+    if (oralGradesLength + writtenGradesLength > 0) {
+        //calculate average weighted 2writtem / 1oral
+        average = (2 * sumWritten + sumOral) / (oralGradesLength + 2 * writtenGradesLength);
+    }
+
+    //round to two decimal points
+    average = Number(average.toFixed(2));
+
+    return average;
 }
