@@ -48,8 +48,9 @@ function addStudentToTable(student) {
     });
 
     //add average Grade
-    const avg = (student.average == 0) ? '-' : student.average;
+    var avg = (student.average == 0) ? '-' : student.average.toFixed(2).replace('.', ','); //make avg look consistent
     tableRow.appendChild(createTableCell(avg, 'border px-4 py-2'));
+
 
     // Add learn more button
     const learnMoreHtml = '<a class=\"m-2 py-1 px-2 text-center text-white font-semibold bg-notenapp-blue hover:bg-notenapp-blue-hover rounded-lg cursor-pointer transition-all\">Info</a>';
