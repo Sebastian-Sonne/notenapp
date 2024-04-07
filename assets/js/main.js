@@ -191,8 +191,8 @@ function submitNewStudent() {
     updateTable();
 
     //clear, reset and hide form
-    clearNewStudentBox();
-    ['id', 'name', 'email'].forEach(id => { toggleInputValidatedBorder(document.getElementById(id), false); });
+    resetNewStudentForm();
+
     toggleModule.toggleBox('create-new-student-box', false);
     document.body.classList.remove('overflow-hidden');
 }
@@ -208,10 +208,13 @@ function openNewStudentBox() {
 /**
  * function to clear new student form
  */
-function clearNewStudentBox() {
+function resetNewStudentForm() {
     document.getElementById('add-student-form').reset();
     clearGradeInputs('writtenGradesContainer');
     clearGradeInputs('oralGradesContainer');
+
+    //reset input borders
+    ['id', 'name', 'email'].forEach(id => { toggleModule.toggleInputValidatedBorder(document.getElementById(id), false); });
 
     //re add default inputs to grades
     addWrittenGrade(1);
@@ -318,10 +321,10 @@ function validateInput(input, leaving = false) {
     const errorMessage = getErrorMessage(input.id, value);
 
     if (errorMessage) {
-        toggleInputErrorBorder(input, true);
+        toggleModule.toggleInputErrorBorder(input, true);
         toggleInputError(errorElement, errorMessage);
     } else {
-        toggleInputErrorBorder(input, false);
+        toggleModule.toggleInputErrorBorder(input, false);
         toggleInputError(errorElement, '', false);
     }
 
@@ -359,25 +362,6 @@ function toggleInputError(inputElement, errorMessage, visible = true) {
     inputElement.textContent = errorMessage;
     toggleModule.toggleBox(inputElement.id, visible);
 }
-
-/**
- * function to toggle the borders a input element to react to an error
- * @param {*} inputElement input element
- * @param {*} visible true if error exists
- */
-const toggleInputErrorBorder = (inputElement, visible) => {
-    toggleInputValidatedBorder(inputElement, !visible);
-    inputElement.classList.toggle('!border-red-600', visible);
-};
-
-
-/**
- * function to toggle the input validation success border
- * @param {*} inputElement input element
- * @param {*} visible true if set visisble
- */
-const toggleInputValidatedBorder = (inputElement, visible) => { inputElement.classList.toggle('!border-green-600', visible) };
-
 
 /**
  * function to validate an email
