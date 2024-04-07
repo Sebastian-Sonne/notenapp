@@ -7,6 +7,12 @@ import * as storageModule from './storage.js';
  * executed when html content load is complete
  */
 document.addEventListener('DOMContentLoaded', function () {
+    //check if local storage is supported
+    if (typeof (Storage) === undefined) {
+        console.log('Dein Browser unterstützt kein local storage :(');
+        //! @me handle error
+    }
+
     //setup button event listeners
     setupButtonEventListeners();
 
@@ -21,27 +27,6 @@ document.addEventListener('DOMContentLoaded', function () {
     updateTable();
 });
 
-/**
- * function to save a new student to local storage
- * @param {*} student student object to be added
- */
-function saveStudentData(student) {
-    if (typeof (Storage) !== undefined) {
-        //retrive existing data or create empty array
-        var data = storageModule.loadData('students');
-
-        //add new student data to data
-        data.push(student);
-
-        //save the updated data
-        storageModule.saveData('students', data)
-
-        updateTable();
-    } else {
-        console.log('Dein Browser unterstützt kein local storage :(');
-        //! @me handle error
-    }
-}
 
 /**
  * function to handle keyDown evemts
@@ -89,6 +74,7 @@ function setupButtonEventListeners() {
         element.addEventListener('click', () => handleKeyDown(new KeyboardEvent('keydown', { key: 'Escape' })));
     });
 
+    //new student form add/remove grades action listeners
     const addWrittenGradeButton = document.getElementById('add-written-grade-button');
     addWrittenGradeButton.addEventListener('click', () => addWrittenGrade());
 
@@ -100,8 +86,6 @@ function setupButtonEventListeners() {
 
     const removeOralGradeButton = document.getElementById('remove-oral-grade-button');
     removeOralGradeButton.addEventListener('click', () => removeOralGrade());
-
-    
 }
 
 /**
@@ -126,10 +110,10 @@ function updateTable() {
     //parse existing student data
     var data = storageModule.loadData('students');
 
-    if (data) {
-        //clear table
-        document.getElementById('students-table-body').innerHTML = '';
+    //clear table
+    document.getElementById('students-table-body').innerHTML = '';
 
+    if (data.length > 0) {
         //sort student based on their average
         data.sort(studentModule.compareStudents);
 
@@ -139,6 +123,7 @@ function updateTable() {
         }
         toggleModule.toggleBox('no-students-found', false)
     } else {
+        console.log('called');
         toggleModule.toggleBox('no-students-found', true)
     }
 }
@@ -154,12 +139,9 @@ function deleteStudent() {
     //retrieve studentID
     const studentId = document.getElementById('info-id').value;
 
-    //retrieve student data
+    //retrieve, modify, update student data
     var data = storageModule.loadData('students');
-
     data = studentModule.deleteStudent(studentId, data);
-
-    //save changes
     storageModule.saveData('students', data);
 
     //update ui
@@ -205,7 +187,8 @@ function submitNewStudent() {
     studentData.average = studentModule.calculateAverage(studentData);
 
     //save student data to local storage
-    saveStudentData(studentData);
+    storageModule.saveStudent(studentData);
+    updateTable();
 
     //clear, reset and hide form
     clearNewStudentBox();

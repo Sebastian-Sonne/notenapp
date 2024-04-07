@@ -15,3 +15,13 @@ export function loadData(key) {
 export function saveData(key, data) {
     localStorage.setItem(key, JSON.stringify(data));
 }
+
+/**
+ * function to save a student to data
+ * @param {*} student 
+ */
+export function saveStudent(student) {
+    var data = loadData('students');
+    data.push(student);
+    saveData('students', data);
+}
