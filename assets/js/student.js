@@ -1,7 +1,7 @@
 import * as storageModule from './storage.js';
 import * as toggleModule from './toggle.js';
-import { updateTable } from './table';
-import { resetNewStudentForm } from './form';
+import { updateTable } from './table.js';
+import { resetNewStudentForm } from './form.js';
 
 /**
  * function to submit a new student
