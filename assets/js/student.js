@@ -21,7 +21,8 @@ export function submitNewStudent() {
             .filter(value => value.trim() !== '')
     };
 
-    studentData.average = calculateAverage(studentData);
+    //calulate average and set two digits after decimal point
+    studentData.average = calculateAverage(studentData).toFixed(2);
 
     //save student data to local storage
     storageModule.saveStudent(studentData);
