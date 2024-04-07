@@ -1,10 +1,36 @@
 import * as toggleModule from './toggle.js';
+import * as storageModule from './storage.js';
+import { compareStudents } from './student.js';
+
+/**
+ * function to update the students table
+ */
+export function updateTable() {
+    //parse existing student data
+    var data = storageModule.loadData('students');
+
+    //clear table
+    document.getElementById('students-table-body').innerHTML = '';
+
+    if (data.length > 0) {
+        //sort student based on their average
+        data.sort(compareStudents);
+
+        //add students to table
+        for (var key in data) {
+            addStudentToTable(data[key]);
+        }
+        toggleModule.toggleBox('no-students-found', false)
+    } else {
+        toggleModule.toggleBox('no-students-found', true)
+    }
+}
 
 /**
  * function to add a student overview table
  * @param {*} student student to be added
  */
-export function addStudentToTable(student) {
+function addStudentToTable(student) {
     const table = document.getElementById('students-table-body');
     const tableRow = document.createElement('tr');
 

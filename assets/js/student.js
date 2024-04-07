@@ -1,10 +1,35 @@
+import * as storageModule from './storage.js';
+import * as toggleModule from './toggle.js';
+import { updateTable } from './table.js';
+
+/**
+ * function to delete a student
+ */
+export function deleteStudent() {
+    //retrieve studentID
+    const studentId = document.getElementById('info-id').value;
+
+    //retrieve data
+    var data = storageModule.loadData('students');
+    //remove student from data
+    data = findStudent(studentId, data);
+    //save modified data
+    storageModule.saveData('students', data);
+
+    //update ui
+    updateTable();
+    toggleModule.toggleBodyOverflow(false);
+    toggleModule.toggleBox('student-info-box', false);
+    toggleModule.toggleBox('confirm-delete-box', false);
+}
+
 /**
  * function to delete student from array of students using id
  * @param {*} studentId id of student to be deleted
  * @param {*} data students
  * @returns modified data
  */
-export function deleteStudent(studentId, data) {
+function findStudent(studentId, data) {
     var index = -1;
     for (var i = 0; i < data.length; i++) {
         if (data[i].id === studentId) {

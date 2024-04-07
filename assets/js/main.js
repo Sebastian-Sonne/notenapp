@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //check if local storage is supported
     if (typeof (Storage) === undefined) {
         console.log('Dein Browser unterstützt kein local storage :(');
+        return;
         //! @me handle error
     }
 
@@ -25,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
     setupInputEventListeners();
 
     //update table after initial load
-    updateTable();
+    tableModule.updateTable();
 });
 
 /**
@@ -46,60 +47,6 @@ function handleKeyDown(event) {
             toggleModule.toggleBodyOverflow(false);
         }
     }
-}
-
-/*
- * main students table 
- */
-
-/**
- * function to update the students table
- */
-function updateTable() {
-    //parse existing student data
-    var data = storageModule.loadData('students');
-
-    //clear table
-    document.getElementById('students-table-body').innerHTML = '';
-
-    if (data.length > 0) {
-        //sort student based on their average
-        data.sort(studentModule.compareStudents);
-
-        //add students to table
-        for (var key in data) {
-            tableModule.addStudentToTable(data[key]);
-        }
-        toggleModule.toggleBox('no-students-found', false)
-    } else {
-        console.log('called');
-        toggleModule.toggleBox('no-students-found', true)
-    }
-}
-
-/*
- * students actions
- */
-
-/**
- * function to delete a student
- */
-function deleteStudent() {
-    //retrieve studentID
-    const studentId = document.getElementById('info-id').value;
-
-    //retrieve data
-    var data = storageModule.loadData('students');
-    //remove student from data
-    data = studentModule.deleteStudent(studentId, data);
-    //save modified data
-    storageModule.saveData('students', data);
-
-    //update ui
-    updateTable();
-    toggleModule.toggleBodyOverflow(false);
-    toggleModule.toggleBox('student-info-box', false);
-    toggleModule.toggleBox('confirm-delete-box', false);
 }
 
 /*
@@ -139,7 +86,7 @@ function submitNewStudent() {
 
     //save student data to local storage
     storageModule.saveStudent(studentData);
-    updateTable();
+    tableModule.updateTable();
 
     //clear, reset and hide form
     formModule.resetNewStudentForm();
@@ -147,7 +94,6 @@ function submitNewStudent() {
     toggleModule.toggleBox('create-new-student-box', false);
     toggleModule.toggleBodyOverflow(false);
 }
-
 
 /*
  *  setup functions
@@ -171,7 +117,7 @@ function setupButtonEventListeners() {
 
     //delete student button action listener
     const deleteStudentButton = document.getElementById('delete-student-button');
-    deleteStudentButton.addEventListener('click', () => deleteStudent());
+    deleteStudentButton.addEventListener('click', () => studentModule.deleteStudent());
 
     //close buttons action listeners
     ['close-student-info-button', 'close-new-student-box-button'].forEach(element => {
