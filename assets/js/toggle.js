@@ -32,3 +32,14 @@ export const toggleInputErrorBorder = (inputElement, visible) => {
  * @param {*} visible true if set visisble
  */
 export const toggleInputValidatedBorder = (inputElement, visible) => { inputElement.classList.toggle('!border-green-600', visible) };
+
+/**
+ * function to toggle the input error element 
+ * @param {*} inputElement input element
+ * @param {*} errorMessage error messge
+ * @param {*} visible true if set visible
+ */
+export const toggleInputError = (inputElement, errorMessage, visible = true) => {
+    inputElement.textContent = errorMessage;
+    toggleBox(inputElement.id, visible);
+}
