@@ -1,6 +1,38 @@
 import * as storageModule from './storage.js';
 import * as toggleModule from './toggle.js';
-import { updateTable } from './table.js';
+import { updateTable } from './table';
+import { resetNewStudentForm } from './form';
+
+/**
+ * function to submit a new student
+ */
+export function submitNewStudent() {
+    // Create student object
+    var studentData = {
+        id: document.getElementById('id').value,
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        //convert grade inputs to array of their values, and remove any empty spaces
+        writtenGrades: Array.from(document.getElementsByClassName('writtenGrade'))
+            .map(input => input.value)
+            .filter(value => value.trim() !== ''),
+        oralGrades: Array.from(document.getElementsByClassName('oralGrade'))
+            .map(input => input.value)
+            .filter(value => value.trim() !== '')
+    };
+
+    studentData.average = calculateAverage(studentData);
+
+    //save student data to local storage
+    storageModule.saveStudent(studentData);
+    updateTable();
+
+    //clear, reset and hide form
+    resetNewStudentForm();
+
+    toggleModule.toggleBox('create-new-student-box', false);
+    toggleModule.toggleBodyOverflow(false);
+}
 
 /**
  * function to delete a student
@@ -68,7 +100,7 @@ export function compareStudents(student1, student2) {
  * @param {} student student
  * @returns average as double
  */
-export function calculateAverage(student) {
+function calculateAverage(student) {
     var oralGrades = student.oralGrades;
     const oralGradesLength = oralGrades.length;
 

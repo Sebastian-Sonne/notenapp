@@ -1,7 +1,6 @@
 import * as studentModule from './student.js';
 import * as tableModule from './table.js';
 import * as toggleModule from './toggle.js';
-import * as storageModule from './storage.js';
 import * as formModule from './form.js';
 
 /**
@@ -29,29 +28,32 @@ document.addEventListener('DOMContentLoaded', function () {
     tableModule.updateTable();
 });
 
+/*
+ * event handlers
+ */
+
 /**
  * function to handle keyDown evemts
  * @param {keyEvent} event 
  */
 function handleKeyDown(event) {
     if (event.key === 'Escape') {
+        //new student form box
         if (toggleModule.isVisible('create-new-student-box')) {
             toggleModule.toggleBox('create-new-student-box', false);
             toggleModule.toggleBodyOverflow(false);
         }
 
+        //confirm delete student box
         if (toggleModule.isVisible('confirm-delete-box')) {
             toggleModule.toggleBox('confirm-delete-box', false);
         } else {
+            //student info box
             toggleModule.toggleBox('student-info-box', false);
             toggleModule.toggleBodyOverflow(false);
         }
     }
 }
-
-/*
- * new student form 
- */
 
 /**
  * function to handle the new student from submit
@@ -61,38 +63,7 @@ function handleFormSubmit(event) {
     event.preventDefault();
 
     //if form valid, submit student
-    if (!formModule.validateForm()) submitNewStudent();
-}
-
-/**
- * function to submit a new student
- */
-function submitNewStudent() {
-    // Create student object
-    var studentData = {
-        id: document.getElementById('id').value,
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        //convert grade inputs to array of their values, and remove any empty spaces
-        writtenGrades: Array.from(document.getElementsByClassName('writtenGrade'))
-            .map(input => input.value)
-            .filter(value => value.trim() !== ''),
-        oralGrades: Array.from(document.getElementsByClassName('oralGrade'))
-            .map(input => input.value)
-            .filter(value => value.trim() !== '')
-    };
-
-    studentData.average = studentModule.calculateAverage(studentData);
-
-    //save student data to local storage
-    storageModule.saveStudent(studentData);
-    tableModule.updateTable();
-
-    //clear, reset and hide form
-    formModule.resetNewStudentForm();
-
-    toggleModule.toggleBox('create-new-student-box', false);
-    toggleModule.toggleBodyOverflow(false);
+    if (!formModule.validateForm()) studentModule.submitNewStudent();
 }
 
 /*
