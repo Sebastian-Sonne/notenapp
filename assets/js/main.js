@@ -95,8 +95,8 @@ function setupButtonEventListeners() {
 function setupInputEventListeners() {
     ['id', 'name', 'email'].forEach(element => {
         const input = document.getElementById(element);
-        input.addEventListener('input', () => validateInput(input));
-        input.addEventListener('focusout', () => validateInput(input, true));
+        input.addEventListener('input', () => formModule.validateInput(input));
+        input.addEventListener('focusout', () => formModule.validateInput(input, true));
     });
 }
 
@@ -164,7 +164,7 @@ function handleFormSubmit(event) {
     event.preventDefault();
 
     //if form valid, submit student
-    if (!validateForm()) submitNewStudent();
+    if (!formModule.validateForm()) submitNewStudent();
 }
 
 /**
@@ -293,45 +293,3 @@ function clearGradeInputs(containerId) {
         input.parentNode.removeChild(input);
     });
 }
-
-/*
- * validate inputs
- */
-
-/**
- * function to validate the add new student form
- * @returns true if invalid
- */
-function validateForm() {
-    const idElement = document.getElementById('id');
-    const nameElement = document.getElementById('name');
-    const emailElement = document.getElementById('email');
-
-    return (validateInput(idElement) || validateInput(nameElement) || validateInput(emailElement));
-}
-
-/**
- * general function to validate input
- * @param {*} input input element
- * @param {*} leaving true if user is leaving input field
- * @returns true if invalid
- */
-function validateInput(input, leaving = false) {
-    const value = input.value.trim(); // remove white spaces in beginning and end
-    const errorElement = document.getElementById(input.id + '-error');
-    const errorMessage = formModule.getFormErrorMessage(input.id, value);
-
-    if (errorMessage) {
-        toggleModule.toggleInputErrorBorder(input, true);
-        toggleModule.toggleInputError(errorElement, errorMessage);
-    } else {
-        toggleModule.toggleInputErrorBorder(input, false);
-        toggleModule.toggleInputError(errorElement, '', false);
-    }
-
-    if (leaving) toggleModule.toggleInputError(errorElement, '', false);
-
-    return (errorMessage) ? true : false;
-}
-
-

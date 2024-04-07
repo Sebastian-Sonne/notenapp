@@ -1,3 +1,45 @@
+import * as toggleModule from './toggle.js';
+
+/**
+ * function to validate the add new student form
+ * @returns true if invalid
+ */
+export function validateForm() {
+    const idElement = document.getElementById('id');
+    const nameElement = document.getElementById('name');
+    const emailElement = document.getElementById('email');
+
+    return (validateInput(idElement) || validateInput(nameElement) || validateInput(emailElement));
+}
+
+/**
+ * general function to validate input
+ * @param {*} input input element
+ * @param {*} leaving true if user is leaving input field
+ * @returns true if invalid
+ */
+export function validateInput(input, leaving = false) {
+    const value = input.value.trim(); // remove white spaces in beginning and end
+    const errorElement = document.getElementById(input.id + '-error');
+    const errorMessage = getFormErrorMessage(input.id, value);
+
+    if (errorMessage) {
+        //show error message
+        toggleModule.toggleInputErrorBorder(input, true);
+        toggleModule.toggleInputError(errorElement, errorMessage);
+    } else {
+        //hide error message
+        toggleModule.toggleInputErrorBorder(input, false);
+        toggleModule.toggleInputError(errorElement, '', false);
+    }
+
+    //if invalid, but leaving, hide message but keep border ed
+    if (leaving) toggleModule.toggleInputError(errorElement, '', false);
+
+    return (errorMessage) ? true : false;
+}
+
+
 /**
  * function to get the corresponding error message
  * @param {*} inputId id of input element
