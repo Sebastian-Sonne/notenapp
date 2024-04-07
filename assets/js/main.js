@@ -1,5 +1,6 @@
 import * as tableModule from './table.js';
 import * as eventModule from './eventHandler.js';
+import { toggleBox } from './toggle.js';
 
 /**
  * executed when html content load is complete intialize the application
@@ -7,9 +8,9 @@ import * as eventModule from './eventHandler.js';
 document.addEventListener('DOMContentLoaded', function () {
     //display error if local storage is unsuppoerted
     if (typeof (Storage) === undefined) {
+        toggleBox('no-local-storage', true);
         console.log('Dein Browser unterstützt kein local storage :(');
-        return;
-        //! @me handle error
+        return; //return early
     }
 
     //setup button event listeners
