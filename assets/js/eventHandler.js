@@ -1,5 +1,4 @@
 import * as studentModule from './student.js';
-import * as tableModule from './table.js';
 import * as toggleModule from './toggle.js';
 import * as formModule from './form.js';
 
