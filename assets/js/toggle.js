@@ -10,6 +10,14 @@ export const toggleBox = (boxID, visible) => {
 };
 
 /**
+ * function to toggle the overflow hidden property of body
+ * @param {boolean} visible true if active
+ */
+export const toggleBodyOverflow = (visible) => {
+    document.body.classList.toggle('overflow-hidden', visible);
+}
+
+/**
  * function to check visibility of elements
  * @param {id} boxID id of element to be checked
  * @returns true if element is visible

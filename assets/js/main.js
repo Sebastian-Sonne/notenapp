@@ -28,7 +28,6 @@ document.addEventListener('DOMContentLoaded', function () {
     updateTable();
 });
 
-
 /**
  * function to handle keyDown evemts
  * @param {keyEvent} event 
@@ -37,67 +36,16 @@ function handleKeyDown(event) {
     if (event.key === 'Escape') {
         if (toggleModule.isVisible('create-new-student-box')) {
             toggleModule.toggleBox('create-new-student-box', false);
-            document.body.classList.remove('overflow-hidden');
+            toggleModule.toggleBodyOverflow(false);
         }
 
         if (toggleModule.isVisible('confirm-delete-box')) {
             toggleModule.toggleBox('confirm-delete-box', false);
         } else {
             toggleModule.toggleBox('student-info-box', false);
-            document.body.classList.remove('overflow-hidden');
+            toggleModule.toggleBodyOverflow(false);
         }
     }
-}
-
-/**
- * function to add the button event listeners
- */
-function setupButtonEventListeners() {
-    //add new student button action listener
-    const newStudentButton = document.getElementById('add-student-button');
-    newStudentButton.addEventListener('click', () => openNewStudentBox());
-
-    //escape delete student sequence button action listener 
-    const escDeleteStudentButton = document.getElementById('escape-delete-student-button');
-    escDeleteStudentButton.addEventListener('click', () => toggleModule.toggleBox('confirm-delete-box', false));
-
-    //open confirm delete student box button action listener
-    const confirmDelteStudentButton = document.getElementById('confirm-delete-student-button');
-    confirmDelteStudentButton.addEventListener('click', () => toggleModule.toggleBox('confirm-delete-box', true));
-
-    //delete student button action listener
-    const deleteStudentButton = document.getElementById('delete-student-button');
-    deleteStudentButton.addEventListener('click', () => deleteStudent());
-
-    //close buttons action listeners
-    ['close-student-info-button', 'close-new-student-box-button'].forEach(element => {
-        element = document.getElementById(element);
-        element.addEventListener('click', () => handleKeyDown(new KeyboardEvent('keydown', { key: 'Escape' })));
-    });
-
-    //new student form add/remove grades action listeners
-    const addWrittenGradeButton = document.getElementById('add-written-grade-button');
-    addWrittenGradeButton.addEventListener('click', () => addWrittenGrade());
-
-    const removeWrittenGradeButton = document.getElementById('remove-written-grade-button');
-    removeWrittenGradeButton.addEventListener('click', () => removeWrittenGrade());
-
-    const addOralGradeButton = document.getElementById('add-oral-grade-button');
-    addOralGradeButton.addEventListener('click', () => addOralGrade());
-
-    const removeOralGradeButton = document.getElementById('remove-oral-grade-button');
-    removeOralGradeButton.addEventListener('click', () => removeOralGrade());
-}
-
-/**
- * function to setup the form input event listeners
- */
-function setupInputEventListeners() {
-    ['id', 'name', 'email'].forEach(element => {
-        const input = document.getElementById(element);
-        input.addEventListener('input', () => formModule.validateInput(input));
-        input.addEventListener('focusout', () => formModule.validateInput(input, true));
-    });
 }
 
 /*
@@ -140,14 +88,16 @@ function deleteStudent() {
     //retrieve studentID
     const studentId = document.getElementById('info-id').value;
 
-    //retrieve, modify, update student data
+    //retrieve data
     var data = storageModule.loadData('students');
+    //remove student from data
     data = studentModule.deleteStudent(studentId, data);
+    //save modified data
     storageModule.saveData('students', data);
 
     //update ui
     updateTable();
-    document.body.classList.remove('overflow-hidden');
+    toggleModule.toggleBodyOverflow(false);
     toggleModule.toggleBox('student-info-box', false);
     toggleModule.toggleBox('confirm-delete-box', false);
 }
@@ -192,104 +142,64 @@ function submitNewStudent() {
     updateTable();
 
     //clear, reset and hide form
-    resetNewStudentForm();
+    formModule.resetNewStudentForm();
 
     toggleModule.toggleBox('create-new-student-box', false);
-    document.body.classList.remove('overflow-hidden');
+    toggleModule.toggleBodyOverflow(false);
+}
+
+
+/*
+ *  setup functions
+ */
+
+/**
+ * function to add the button event listeners
+ */
+function setupButtonEventListeners() {
+    //add new student button action listener
+    const newStudentButton = document.getElementById('add-student-button');
+    newStudentButton.addEventListener('click', () => formModule.openNewStudentBox());
+
+    //escape delete student sequence button action listener 
+    const escDeleteStudentButton = document.getElementById('escape-delete-student-button');
+    escDeleteStudentButton.addEventListener('click', () => toggleModule.toggleBox('confirm-delete-box', false));
+
+    //open confirm delete student box button action listener
+    const confirmDelteStudentButton = document.getElementById('confirm-delete-student-button');
+    confirmDelteStudentButton.addEventListener('click', () => toggleModule.toggleBox('confirm-delete-box', true));
+
+    //delete student button action listener
+    const deleteStudentButton = document.getElementById('delete-student-button');
+    deleteStudentButton.addEventListener('click', () => deleteStudent());
+
+    //close buttons action listeners
+    ['close-student-info-button', 'close-new-student-box-button'].forEach(element => {
+        element = document.getElementById(element);
+        element.addEventListener('click', () => handleKeyDown(new KeyboardEvent('keydown', { key: 'Escape' })));
+    });
+
+    //new student form add/remove grades action listeners
+    const addWrittenGradeButton = document.getElementById('add-written-grade-button');
+    addWrittenGradeButton.addEventListener('click', () => formModule.addWrittenGrade());
+
+    const removeWrittenGradeButton = document.getElementById('remove-written-grade-button');
+    removeWrittenGradeButton.addEventListener('click', () => formModule.removeWrittenGrade());
+
+    const addOralGradeButton = document.getElementById('add-oral-grade-button');
+    addOralGradeButton.addEventListener('click', () => formModule.addOralGrade());
+
+    const removeOralGradeButton = document.getElementById('remove-oral-grade-button');
+    removeOralGradeButton.addEventListener('click', () => formModule.removeOralGrade());
 }
 
 /**
- * function to open the new student box
+ * function to setup the form input event listeners
  */
-function openNewStudentBox() {
-    toggleModule.toggleBox('create-new-student-box', true)
-    document.body.classList.add('overflow-hidden');
-}
-
-/**
- * function to clear new student form
- */
-function resetNewStudentForm() {
-    document.getElementById('add-student-form').reset();
-    clearGradeInputs('writtenGradesContainer');
-    clearGradeInputs('oralGradesContainer');
-
-    //reset input borders
-    ['id', 'name', 'email'].forEach(id => { toggleModule.toggleInputValidatedBorder(document.getElementById(id), false); });
-
-    //re add default inputs to grades
-    addWrittenGrade(1);
-    addOralGrade(2);
-}
-
-/**
- * function to add a written grade input field to the add new student form
- * @param {int} placeholder 
- */
-function addWrittenGrade(placeholder) {
-    var container = document.getElementById('writtenGradesContainer');
-    var input = document.createElement('input');
-    input.type = 'number';
-    if (placeholder) {
-        input.placeholder = placeholder;
-    }
-    input.classList = 'writtenGrade w-full mt-2 px-4 py-2 rounded-lg border border-transparent focus:border-green-600 focus:outline-none';
-    input.name = 'writtenGrade[]';
-    container.appendChild(input);
-
-    //set focus for better ux
-    input.focus();
-}
-
-/**
- * function to remove the last written grade input field of the add new student array
- */
-function removeWrittenGrade() {
-    var container = document.getElementById('writtenGradesContainer');
-    var lastChild = container.lastElementChild;
-    if (lastChild && lastChild.classList.contains('writtenGrade')) {
-        container.removeChild(lastChild);
-    }
-}
-
-/**
- * function to add a oral grade input field to the add new student form
- * @param {int} placeholder 
- */
-function addOralGrade(placeholder) {
-    var container = document.getElementById('oralGradesContainer');
-    var input = document.createElement('input');
-    input.type = 'number';
-    if (placeholder) {
-        input.placeholder = placeholder;
-    }
-    input.classList = 'oralGrade w-full mt-2 px-4 py-2 rounded-lg border border-transparent focus:border-green-600 focus:outline-none';
-    input.name = 'oralGrade[]';
-    container.appendChild(input);
-
-    //set focus for better ux
-    input.focus();
-}
-
-/**
- * function to remove the last written grade input field of the add new student array
- */
-function removeOralGrade() {
-    var container = document.getElementById('oralGradesContainer');
-    var lastChild = container.lastElementChild;
-    if (lastChild && lastChild.classList.contains('oralGrade')) {
-        container.removeChild(lastChild);
-    }
-}
-
-/**
- * function to clear all grade input fields in a container (for add new student form)
- * @param {container} containerId 
- */
-function clearGradeInputs(containerId) {
-    var container = document.getElementById(containerId);
-    var inputs = container.querySelectorAll('.writtenGrade, .oralGrade');
-    inputs.forEach(input => {
-        input.parentNode.removeChild(input);
+function setupInputEventListeners() {
+    ['id', 'name', 'email'].forEach(element => {
+        const input = document.getElementById(element);
+        input.addEventListener('input', () => formModule.validateInput(input));
+        input.addEventListener('focusout', () => formModule.validateInput(input, true));
     });
 }

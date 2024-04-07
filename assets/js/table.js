@@ -66,7 +66,7 @@ function openStudentInfoTable(student) {
 
     //show info box
     toggleModule.toggleBox('student-info-box', true);
-    document.body.classList.add('overflow-hidden');
+    toggleModule.toggleBodyOverflow(true);
 }
 
 /**
