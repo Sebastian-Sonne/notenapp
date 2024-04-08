@@ -741,14 +741,6 @@ video {
   width: 3rem;
 }
 
-.w-28 {
-  width: 7rem;
-}
-
-.w-32 {
-  width: 8rem;
-}
-
 .w-48 {
   width: 12rem;
 }
@@ -757,16 +749,68 @@ video {
   width: 100%;
 }
 
-.w-3 {
-  width: 0.75rem;
+.w-10 {
+  width: 2.5rem;
 }
 
-.w-36 {
-  width: 9rem;
+.min-w-10 {
+  min-width: 2.5rem;
+}
+
+.min-w-0 {
+  min-width: 0px;
+}
+
+.min-w-40 {
+  min-width: 10rem;
+}
+
+.min-w-96 {
+  min-width: 24rem;
+}
+
+.min-w-8 {
+  min-width: 2rem;
+}
+
+.min-w-80 {
+  min-width: 20rem;
+}
+
+.min-w-7 {
+  min-width: 1.75rem;
+}
+
+.min-w-72 {
+  min-width: 18rem;
+}
+
+.min-w-6 {
+  min-width: 1.5rem;
+}
+
+.min-w-64 {
+  min-width: 16rem;
+}
+
+.min-w-5 {
+  min-width: 1.25rem;
+}
+
+.min-w-56 {
+  min-width: 14rem;
 }
 
 .max-w-6xl {
   max-width: 72rem;
+}
+
+.max-w-14 {
+  max-width: 3.5rem;
+}
+
+.max-w-10 {
+  max-width: 2.5rem;
 }
 
 .table-auto {
@@ -826,6 +870,10 @@ video {
 
 .overflow-y-auto {
   overflow-y: auto;
+}
+
+.whitespace-nowrap {
+  white-space: nowrap;
 }
 
 .rounded-full {
@@ -972,6 +1020,10 @@ video {
 
 .text-center {
   text-align: center;
+}
+
+.text-start {
+  text-align: start;
 }
 
 .align-middle {

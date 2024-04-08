@@ -43,7 +43,7 @@ function addStudentToTable(student) {
     //add id, name, email
     ['id', 'name', 'email'].forEach(key => {
         if (student.hasOwnProperty(key)) {
-            tableRow.appendChild(createTableCell(student[key], 'border px-4 py-2'));
+            tableRow.appendChild(createTableCell(student[key], 'border px-4 py-2 whitespace-nowrap'));
         }
     });
 
