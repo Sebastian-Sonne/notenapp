@@ -49,7 +49,7 @@ function addStudentToTable(student) {
 
     //add average Grade
     var avg = (student.average == 0) ? '-' : student.average.toFixed(2).replace('.', ','); //make avg look consistent
-    tableRow.appendChild(createTableCell(avg, 'border px-4 py-2'));
+    tableRow.appendChild(createTableCell(avg, 'border px-4 py-2 text-center'));
 
 
     // Add learn more button
