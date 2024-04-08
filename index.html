@@ -1,16 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
+    <!-- Essential Meta Tags -->
     <meta charset="UTF-8">
-    <meta name="description" content="Project: Admin Panel for Teachers using Notenapp">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="language" content="de">
+    <meta name="description" content="A modern web application designed to manage students and their information simple & efficiently">
+    <meta name="keywords" content="teacher, management, admin-panel">
+    <meta name="author" content="Sebastian Sonne">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index,follow">
+
+    <!-- Microsoft Application Meta Tags -->
+    <meta name="msapplication-TileColor" content="#008ee6">
+    <meta name="msapplication-TileImage" content="https://www.notenapp.com/wp-content/uploads/2023/08/cropped-ios-marketing-32x32.png">
+
+    <!-- Apple-specific Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#008ee6">
+
+    <!-- Social Media Meta Tags -->
+    <meta property="og:title" content="Teacher Admin Panel">
+    <meta property="og:description" content="Store student information simple & efficiently">
+    <meta property="og:image" content="https://www.notenapp.com/wp-content/uploads/2023/08/cropped-ios-marketing-32x32.png">
+    <meta property="og:url" content="https://notenapp.sebastian-sonne.com">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@username">
+
+    <!-- Canonical Link -->
+    <link rel="canonical" href="https://notenapp.sebastian-sonne.com">
+
+    <!-- Favicon -->
     <link rel="icon" href="https://www.notenapp.com/wp-content/uploads/2023/08/cropped-ios-marketing-32x32.png">
+
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="/assets/css/styles.css">
     <link rel="stylesheet" href="/assets/css/custom.css">
+
+    <!-- JavaScript -->
     <script type="module" src="/assets/js/main.js"></script>
+
+    <!-- Title -->
     <title>Lehrer Admin Panel</title>
 </head>
+
 
 <body>
     <!--* header-->
@@ -28,7 +62,8 @@
                     </svg>
                 </a>
 
-                <h1 class="text-gray-700 text-2xl font-semibold mt-4"><span class="hidden xs:inline-block">Lehrer</span> Admin Panel</h1>
+                <h1 class="text-gray-700 text-2xl font-semibold mt-4"><span class="hidden xs:inline-block">Lehrer</span>
+                    Admin Panel</h1>
             </div>
 
             <div class="flex justify-center aspect-square w-12 mx-4">
@@ -46,7 +81,8 @@
                 <a id="add-student-button"
                     class="px-4 py-2 rounded-lg bg-green-600 hover:bg-green-500 cursor-pointer transition-all">
                     <span class="hidden xs:flex text-white font-semibold">Schüler Hinzufügen</span>
-                    <svg class="flex xs:hidden" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="flex xs:hidden" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
                         <line x1="12" y1="3" x2="12" y2="21" stroke="white" stroke-width="2" />
                         <line x1="3" y1="12" x2="21" y2="12" stroke="white" stroke-width="2" />
                     </svg>
@@ -85,7 +121,8 @@
 
                 <!--No Local Storage supported error display-->
                 <div id="no-local-storage" class="hidden flex-col items-center w-full">
-                    <h2 class="font-bold text-3xl text-center text-gray-800">Keine Unterstützung für Lokalen Speicher</h2>
+                    <h2 class="font-bold text-3xl text-center text-gray-800">Keine Unterstützung für Lokalen Speicher
+                    </h2>
                     <p class="text-lg text-center text-gray-700">Verwende einen unterstützten Browser.</p>
                 </div>
 
