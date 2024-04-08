@@ -101,7 +101,7 @@ export function compareStudents(student1, student2) {
  * @param {} student student
  * @returns average as double
  */
-function calculateAverage(student) {
+export function calculateAverage(student) {
     var oralGrades = student.oralGrades;
     const oralGradesLength = oralGrades.length;
 

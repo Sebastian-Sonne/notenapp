@@ -50,6 +50,7 @@ export function addWrittenGrade(placeholder) {
     input.type = 'number';
     if (placeholder) {
         input.placeholder = placeholder;
+        input.value = placeholder;
     }
     input.classList = 'writtenGrade w-full mt-2 px-4 py-2 rounded-lg border border-transparent focus:border-green-600 focus:outline-none';
     input.name = 'writtenGrade[]';
@@ -80,6 +81,7 @@ export function addOralGrade(placeholder) {
     input.type = 'number';
     if (placeholder) {
         input.placeholder = placeholder;
+        input.value = placeholder;
     }
     input.classList = 'oralGrade w-full mt-2 px-4 py-2 rounded-lg border border-transparent focus:border-green-600 focus:outline-none';
     input.name = 'oralGrade[]';

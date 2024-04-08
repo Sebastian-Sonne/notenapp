@@ -1,5 +1,8 @@
 import * as tableModule from './table.js';
 import * as eventModule from './eventHandler.js';
+import * as formModule from './form.js';
+import * as studentModule from './student.js';
+import * as storageModule from './storage.js'
 import { toggleBox } from './toggle.js';
 
 /**
@@ -27,4 +30,45 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //update table setup complete
     tableModule.updateTable();
+
+    document.getElementById('gen-students').addEventListener('click', () => generateStudents())
 });
+
+function generateStudents() {
+    for (var i = 0; i < 1000; i++) {
+        document.getElementById('id').value = i;
+        document.getElementById('name').value = 'student' + i;
+        document.getElementById('email').value = 'generated-' + i + '@example.com';
+
+        for (var j = 0; j < 20; j++) {
+            formModule.addWrittenGrade(Math.round(Math.random() * 6));
+            formModule.addOralGrade(Math.round(Math.random() * 6));
+        }
+
+        var studentData = {
+            id: document.getElementById('id').value,
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            //convert grade inputs to array of their values, and remove any empty spaces
+            writtenGrades: Array.from(document.getElementsByClassName('writtenGrade'))
+                .map(input => input.value)
+                .filter(value => value.trim() !== ''),
+            oralGrades: Array.from(document.getElementsByClassName('oralGrade'))
+                .map(input => input.value)
+                .filter(value => value.trim() !== '')
+        };
+
+        //calulate and set student average
+        studentData.average = studentModule.calculateAverage(studentData);
+
+        //save student data to local storage
+        storageModule.saveStudent(studentData);
+        tableModule.updateTable();
+
+        console.log('generated student. ' + i);
+        //clear, reset and hide form
+        formModule.resetNewStudentForm();
+    }
+
+
+}
