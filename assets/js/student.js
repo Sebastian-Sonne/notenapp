@@ -108,6 +108,7 @@ function calculateAverage(student) {
     var writtenGrades = student.writtenGrades;
     const writtenGradesLength = writtenGrades.length;
 
+    //calculate sum of grades
     var sumOral = oralGrades.reduce((acc, grade) => acc + parseFloat(grade), 0);
     var sumWritten = writtenGrades.reduce((acc, grade) => acc + parseFloat(grade), 0);
 
