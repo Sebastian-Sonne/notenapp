@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
     tableModule.updateTable();
 
     document.getElementById('gen-students').addEventListener('click', () => generateStudents())
+    document.getElementById('delete-all-students').addEventListener('click', () => deleteAllStudents())
 });
 
 function generateStudents() {
@@ -69,6 +70,13 @@ function generateStudents() {
         //clear, reset and hide form
         formModule.resetNewStudentForm();
     }
+}
 
+function deleteAllStudents() {
+    var confirmation = confirm('Möchten Sie all Schüler Löschen? Dieser Vorgang kann nicht rückgangig gemach werden');
 
+    if (confirmation) {
+        storageModule.saveData('students', '');
+        tableModule.updateTable();
+    }
 }
