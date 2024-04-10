@@ -6,7 +6,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="language" content="de">
-    <meta name="description" content="A modern web application designed to manage students and their information simple & efficiently">
+    <meta name="description"
+        content="A modern web application designed to manage students and their information simple & efficiently">
     <meta name="keywords" content="teacher, management, admin-panel">
     <meta name="author" content="Sebastian Sonne">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +22,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="#008ee6">
     <meta name="apple-mobile-web-app-title" content="Notenapp Admin">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://notenapp.sebastian-sonne.com/assets/img/notenapp-180x180.jpg">
+    <link rel="apple-touch-icon" sizes="180x180"
+        href="https://notenapp.sebastian-sonne.com/assets/img/notenapp-180x180.jpg">
     <link rel="mask-icon" href="https://notenapp.sebastian-sonne.com/assets/img/notenapp-180x180.jpg" color="#008ee6">
     <link rel="apple-touch-startup-image" href="/assets/img/notenapp.svg">
 
@@ -50,10 +52,10 @@
 
 <body>
     <!--* header-->
-    <section class="flex justify-center h-16 bg-white text-white text-4xl mb-4 mt-2">
+    <header class="flex justify-center h-16 bg-white text-white text-4xl mb-4 mt-2">
         <div class="flex justify-between max-w-6xl w-full bg-white">
             <div class="flex">
-                <a class="aspect-square w-12 mx-4" href="/">
+                <a class="aspect-square w-12 mx-4" href="/" tabindex="1">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         xmlns:serif="http://www.serif.com/" width="100%" height="100%" viewBox="0 0 8334 8334"
                         xml:space="preserve"
@@ -72,7 +74,7 @@
                 <div class="w-full aspect-square my-auto rounded-full bg-gray-300 cursor-pointer"></div>
             </div>
         </div>
-    </section>
+    </header>
 
     <!--* Students Overview Header + new student button-->
     <section class="flex justify-center mb-4">
@@ -80,21 +82,19 @@
             <div class="flex justify-between align-middle h-10 w-full">
                 <h2 class="h-10 pt-2 text-gray-700 text-2xl font-semibold">Übersicht Schüler</h2>
 
-                <a id="add-student-button"
-                    class="px-4 py-2 rounded-lg bg-green-600 hover:bg-green-500 cursor-pointer transition-all">
+                <button id="add-student-button" class="px-4 py-2 rounded-lg bg-green-600 hover:bg-green-500 cursor-pointer transition-all">
                     <span class="hidden xs:flex text-white font-semibold">Schüler Hinzufügen</span>
-                    <svg class="flex xs:hidden" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
+                    <svg class="flex xs:hidden" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <line x1="12" y1="3" x2="12" y2="21" stroke="white" stroke-width="2" />
                         <line x1="3" y1="12" x2="21" y2="12" stroke="white" stroke-width="2" />
                     </svg>
-                </a>
+                </button>
             </div>
         </div>
     </section>
 
     <!--* Students Overview Table & noscript-->
-    <section class="flex justify-center">
+    <main class="flex justify-center">
         <div class="flex flex-col max-w-6xl w-full px-4">
             <div class="w-full p-4 bg-gray-50 rounded-lg">
                 <!--Student Table-->
@@ -135,7 +135,7 @@
                 </noscript>
             </div>
         </div>
-    </section>
+    </main>
 
     <!--* Add new Student-->
     <section id="create-new-student-box"
@@ -359,10 +359,10 @@
     </section>
 
     <!--* Footer-->
-    <section class="flex justify-center align-middle w-full h-6 my-2">
+    <footer class="flex justify-center align-middle w-full h-6 my-2">
         <p class="w-48 text-gray-500 font-normal">&copy 2024 <a href="https://github.com/sebastian-sonne"
-                class="text-slate-600 hover:text-notenapp-blue">Sebastian Sonne</a></p>
-    </section>
+                class="text-slate-600 hover:text-notenapp-blue" target="_blank">Sebastian Sonne</a></p>
+    </footer>
 </body>
 
 </html>
