@@ -31,8 +31,9 @@ document.addEventListener('DOMContentLoaded', function () {
     //update table setup complete
     tableModule.updateTable();
 
-    document.getElementById('gen-students').addEventListener('click', () => generateStudents())
-    document.getElementById('delete-all-students').addEventListener('click', () => deleteAllStudents())
+    document.getElementById('gen-students').addEventListener('click', () => generateStudents());
+    document.getElementById('delete-all-students').addEventListener('click', () => deleteAllStudents());
+    document.getElementById('to-top-button').addEventListener('click', () => toTop());
 });
 
 function generateStudents() {
@@ -66,7 +67,7 @@ function generateStudents() {
         storageModule.saveStudent(studentData);
         tableModule.updateTable();
 
-        console.log('generated student. ' + i);
+        console.log('generated student: ' + i);
         //clear, reset and hide form
         formModule.resetNewStudentForm();
     }
@@ -79,4 +80,8 @@ function deleteAllStudents() {
         storageModule.saveData('students', '');
         tableModule.updateTable();
     }
+}
+
+function toTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
