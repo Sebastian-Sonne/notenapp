@@ -7,7 +7,7 @@ import { resetNewStudentForm } from './form.js';
  * function to submit a new student
  */
 export function submitNewStudent() {
-    // Create student object
+    // Create student object & asign values
     var studentData = {
         id: document.getElementById('id').value,
         name: document.getElementById('name').value,
@@ -26,6 +26,8 @@ export function submitNewStudent() {
 
     //save student data to local storage
     storageModule.saveStudent(studentData);
+
+    //update table with new data
     updateTable();
 
     //clear, reset and hide form
