@@ -91,4 +91,11 @@ function handleKeyDown(event) {
             toggleModule.toggleBodyOverflow(false);
         }
     }
+
+    if (event.key == 'Delete') {
+
+        if (toggleModule.isVisible('student-info-box')) {
+            toggleModule.toggleBox('confirm-delete-box', true);
+        }
+    }
 }

@@ -35,10 +35,12 @@ function addStudentToTable(student) {
     const tableRow = document.createElement('tr');
 
     //set class properties
+    tableRow.tabIndex = 0;
     tableRow.classList = 'hover:bg-gray-100 cursor-pointer';
 
-    // add eventListener to open student info
+    // add eventListeners to open student info
     tableRow.addEventListener('click', () => openStudentInfoTable(student));
+    tableRow.addEventListener('keydown', (event) => {if (event.key === 'Enter') openStudentInfoTable(student)});
 
     //add id, name, email
     ['id', 'name', 'email'].forEach(key => {
@@ -53,7 +55,7 @@ function addStudentToTable(student) {
 
 
     // Add learn more button
-    const learnMoreHtml = '<a class=\"m-2 py-1 px-2 text-center text-white font-semibold bg-notenapp-blue hover:bg-notenapp-blue-hover rounded-lg cursor-pointer transition-all\">Info</a>';
+    const learnMoreHtml = '<a class=\"m-2 py-1 px-2 text-center text-white font-semibold bg-notenapp-blue hover:bg-notenapp-blue-hover focus:bg-notenapp-blue-hover rounded-lg cursor-pointer transition-all\">Info</a>';
     tableRow.appendChild(createTableCell(learnMoreHtml, 'border-y'));
 
     table.appendChild(tableRow);

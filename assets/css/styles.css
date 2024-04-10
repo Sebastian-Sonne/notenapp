@@ -737,6 +737,14 @@ video {
   height: 100%;
 }
 
+.max-h-\[400px\] {
+  max-height: 400px;
+}
+
+.w-10 {
+  width: 2.5rem;
+}
+
 .w-12 {
   width: 3rem;
 }
@@ -749,68 +757,8 @@ video {
   width: 100%;
 }
 
-.w-10 {
-  width: 2.5rem;
-}
-
-.min-w-10 {
-  min-width: 2.5rem;
-}
-
-.min-w-0 {
-  min-width: 0px;
-}
-
-.min-w-40 {
-  min-width: 10rem;
-}
-
-.min-w-96 {
-  min-width: 24rem;
-}
-
-.min-w-8 {
-  min-width: 2rem;
-}
-
-.min-w-80 {
-  min-width: 20rem;
-}
-
-.min-w-7 {
-  min-width: 1.75rem;
-}
-
-.min-w-72 {
-  min-width: 18rem;
-}
-
-.min-w-6 {
-  min-width: 1.5rem;
-}
-
-.min-w-64 {
-  min-width: 16rem;
-}
-
-.min-w-5 {
-  min-width: 1.25rem;
-}
-
-.min-w-56 {
-  min-width: 14rem;
-}
-
 .max-w-6xl {
   max-width: 72rem;
-}
-
-.max-w-14 {
-  max-width: 3.5rem;
-}
-
-.max-w-10 {
-  max-width: 2.5rem;
 }
 
 .table-auto {
@@ -1198,6 +1146,16 @@ video {
 .focus\:border-green-600:focus {
   --tw-border-opacity: 1;
   border-color: rgb(22 163 74 / var(--tw-border-opacity));
+}
+
+.focus\:bg-notenapp-blue-hover:focus {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 110 178 / var(--tw-bg-opacity));
+}
+
+.focus\:bg-gray-100:focus {
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
 
 .focus\:outline-none:focus {
