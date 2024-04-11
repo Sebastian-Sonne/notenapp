@@ -737,6 +737,71 @@ video {
   height: 100%;
 }
 
+.h-fit {
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.h-screen {
+  height: 100vh;
+}
+
+.h-\[calc\(100\%\+2rem\)\] {
+  height: calc(100% + 2rem);
+}
+
+.h-\[calc\(100\%2rem\)\] {
+  height: calc(100%2rem);
+}
+
+.h-\[calc\(100\%-2rem\)\] {
+  height: calc(100% - 2rem);
+}
+
+.h-\[calc\(100\%-h-6\)\] {
+  height: calc(100% - h - 6);
+}
+
+.h-\[calc\(100\%-\)\] {
+  height: calc(100% - );
+}
+
+.h-\[calc\(100\%-1\)\] {
+  height: calc(100% - 1);
+}
+
+.h-\[calc\(100\%-1\.5rem\)\] {
+  height: calc(100% - 1.5rem);
+}
+
+.h-\[calc\(100\%-1\.5rem-\)\] {
+  height: calc(100% - 1.5rem - );
+}
+
+.h-\[calc\(100vh-1\.5rem\)\] {
+  height: calc(100vh - 1.5rem);
+}
+
+.h-\[calc\(100vh-1\.5rem-64px\)\] {
+  height: calc(100vh - 1.5rem - 64px);
+}
+
+.h-\[calc\(100vh--64px\)\] {
+  height: calc(100vh - -64px);
+}
+
+.h-\[calc\(100vh-32px-64px\)\] {
+  height: calc(100vh - 32px - 64px);
+}
+
+.h-\[calc\(100vh-32px-88px\)\] {
+  height: calc(100vh - 32px - 88px);
+}
+
+.h-\[calc\(100vh-40px-88px\)\] {
+  height: calc(100vh - 40px - 88px);
+}
+
 .max-h-\[400px\] {
   max-height: 400px;
 }
@@ -755,6 +820,10 @@ video {
 
 .w-full {
   width: 100%;
+}
+
+.w-\[calc\(100\%\+2rem\)\] {
+  width: calc(100% + 2rem);
 }
 
 .max-w-6xl {
@@ -879,6 +948,11 @@ video {
   border-color: transparent;
 }
 
+.border-notenapp-blue {
+  --tw-border-opacity: 1;
+  border-color: rgb(0 142 230 / var(--tw-border-opacity));
+}
+
 .bg-gray-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
@@ -966,6 +1040,18 @@ video {
   padding-top: 0.5rem;
 }
 
+.pb-40 {
+  padding-bottom: 10rem;
+}
+
+.pb-6 {
+  padding-bottom: 1.5rem;
+}
+
+.pb-2 {
+  padding-bottom: 0.5rem;
+}
+
 .text-center {
   text-align: center;
 }
@@ -976,6 +1062,10 @@ video {
 
 .align-middle {
   vertical-align: middle;
+}
+
+.font-Syne {
+  font-family: Syne, sans-serif;
 }
 
 .text-2xl {
@@ -1001,6 +1091,16 @@ video {
 .text-lg {
   font-size: 1.125rem;
   line-height: 1.75rem;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.text-5xl {
+  font-size: 3rem;
+  line-height: 1;
 }
 
 .font-bold {
@@ -1098,6 +1198,11 @@ video {
   border-color: rgb(220 38 38 / var(--tw-border-opacity));
 }
 
+.hover\:border-notenapp-blue-hover:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(0 110 178 / var(--tw-border-opacity));
+}
+
 .hover\:bg-gray-100:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
@@ -1151,11 +1256,6 @@ video {
 .focus\:bg-notenapp-blue-hover:focus {
   --tw-bg-opacity: 1;
   background-color: rgb(0 110 178 / var(--tw-bg-opacity));
-}
-
-.focus\:bg-gray-100:focus {
-  --tw-bg-opacity: 1;
-  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
 
 .focus\:outline-none:focus {

@@ -39,6 +39,11 @@
     <!-- Favicon -->
     <link rel="icon" href="https://notenapp.sebastian-sonne.com/assets/img/notenapp-180x180.jpg">
 
+    <!-- Google Font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500&display=swap" rel="stylesheet">
+
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/assets/css/styles.css">
 
@@ -73,8 +78,14 @@
     </header>
 
     <!--* 404 message-->
-    <section>
-        <h1 class="text-center text-2xl">404 not found</h1>
+    <section class="flex items-center justify-center h-[calc(100vh-40px-88px)]">
+        <div class="flex flex-col pb-40">
+            <h1 class="text-center font-Syne text-4xl pb-2">404 - Page not found</h1>
+            <h2 class="text-center font-Syne text-2xl pb-6">Oops. Diese Seite scheint nicht zu existieren.</h2>
+            <a href="/"
+                class="mx-auto px-4 py-2 font-semibold text-xl text-white rounded-lg bg-notenapp-blue hover:bg-notenapp-blue-hover cursor-pointer transition-all">Zur
+                Startseite</a>
+        </div>
     </section>
 
     <!--* Footer-->
