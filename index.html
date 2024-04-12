@@ -82,9 +82,11 @@
             <div class="flex justify-between align-middle h-10 w-full">
                 <h2 class="h-10 pt-2 text-gray-700 text-2xl font-semibold">Übersicht Schüler</h2>
 
-                <button id="add-student-button" class="px-4 py-2 rounded-lg bg-green-600 hover:bg-green-500 cursor-pointer transition-all">
+                <button id="add-student-button"
+                    class="px-4 py-2 rounded-lg bg-green-600 hover:bg-green-500 cursor-pointer transition-all">
                     <span class="hidden xs:flex text-white font-semibold">Schüler Hinzufügen</span>
-                    <svg class="flex xs:hidden" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="flex xs:hidden" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
                         <line x1="12" y1="3" x2="12" y2="21" stroke="white" stroke-width="2" />
                         <line x1="3" y1="12" x2="21" y2="12" stroke="white" stroke-width="2" />
                     </svg>
@@ -356,6 +358,21 @@
                 </div>
             </div>
         </div>
+    </section>
+
+    <!--* notification to user-->
+    <section id="notification-box"
+        class="hidden flex-row fixed top-0 right-0 m-2 px-1 bg-gray-50 border-2 border-gray-400 rounded-lg shadow-lg z-10">
+
+        <h1 id="notification-title" class="flex items-center justify-center text-lg font-semibold m-2 mr-0 pb-1">[User Notification Message]</h1>
+
+        <button id="close-notification-button" type="button"
+            class="flex items-center justify-center m-2 p-2 rounded-lg text-white hover:bg-red-600 transition-all">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="5" y1="5" x2="19" y2="19" stroke="#1f2937" stroke-width="3" />
+                <line x1="19" y1="5" x2="5" y2="19" stroke="#1f2937" stroke-width="3" />
+            </svg>
+        </button>
     </section>
 
     <!--* Footer-->

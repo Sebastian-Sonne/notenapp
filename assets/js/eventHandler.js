@@ -28,6 +28,10 @@ export function setupButtonEventListeners() {
         element.addEventListener('click', () => handleKeyDown(new KeyboardEvent('keydown', { key: 'Escape' })));
     });
 
+    //user notification box
+    const closeUserNotification = document.getElementById('close-notification-button');
+    closeUserNotification.addEventListener('click', () => toggleModule.toggleBox('notification-box', false));
+
     //new student form add/remove grades action listeners
     const addWrittenGradeButton = document.getElementById('add-written-grade-button');
     addWrittenGradeButton.addEventListener('click', () => formModule.addWrittenGrade());

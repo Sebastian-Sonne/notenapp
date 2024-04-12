@@ -30,6 +30,9 @@ export function submitNewStudent() {
     //update table with new data
     updateTable();
 
+    //give user feedback
+    toggleModule.toggleNotificationBox('Schüler Erfolgreich Hinzugefügt', true);
+
     //clear, reset and hide form
     resetNewStudentForm();
 
@@ -50,6 +53,9 @@ export function deleteStudent() {
     data = findStudent(studentId, data);
     //save modified data
     storageModule.saveData('students', data);
+
+    //give user feedback
+    toggleModule.toggleNotificationBox('Schüler Erfolgreich Gelöscht', true);
 
     //update ui
     updateTable();

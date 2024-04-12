@@ -51,3 +51,16 @@ export const toggleInputError = (inputElement, errorMessage, visible = true) => 
     inputElement.textContent = errorMessage;
     toggleBox(inputElement.id, visible);
 }
+
+/**
+ * function to toggle the notification box 
+ * @param {*} message message for user
+ * @param {*} visible true if set vsisble
+ */
+export const toggleNotificationBox = (message, visible = true) => {
+    document.getElementById('notification-title').textContent = message;
+
+    toggleBox('notification-box', visible);
+    const notificationBox = document.getElementById('notification-box');
+    notificationBox.classList.toggle('!border-green-600', visible);
+}
