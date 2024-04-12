@@ -93,7 +93,9 @@ function handleKeyDown(event) {
             //student info box
             toggleModule.toggleBox('student-info-box', false);
             toggleModule.toggleBodyOverflow(false);
-        }
+        }   
+
+        toggleModule.toggleNotificationBox('', false);
     }
 
     if (event.key == 'Delete') {
