@@ -6,6 +6,8 @@ Welcome to the Teacher Admin Panel, a modern web application designed to manage 
 
 The Teacher Admin Panel provides a comprehensive overview of students, allowing teachers to easily access and manage student data.
 
+=> *the react version of this application can be found [here](https://github.com/sebastian-sonne/react-notenapp)*
+
 ### Features
 
 - Add new students with ease.
